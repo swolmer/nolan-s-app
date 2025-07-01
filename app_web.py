@@ -8,10 +8,18 @@ from utils.loader import (
 
 st.set_page_config(page_title="Nolan’s Safe Space", page_icon="🌲", layout="centered")
 
+# Use GitHub raw URLs for Streamlit Cloud compatibility
+WELCOME_BG = "https://raw.githubusercontent.com/swolmer/nolan-s-app/main/assets/welcome_bg.png"
+TRAIL_BG = "https://raw.githubusercontent.com/swolmer/nolan-s-app/main/assets/grand_teton_map.png"
+WOOD_POST = "https://raw.githubusercontent.com/swolmer/nolan-s-app/main/assets/wood_post.png"
+
 def set_background(image_url):
     st.markdown(
         f"""
         <style>
+        body {{
+            background: #e6ecf0 !important;
+        }}
         .stApp {{
             background-image: url("{image_url}");
             background-size: cover;
@@ -20,13 +28,13 @@ def set_background(image_url):
             background-attachment: fixed;
         }}
         .glass {{
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.75);
             padding: 2rem 3rem;
             border-radius: 18px;
             max-width: 600px;
             margin: 5vh auto 2rem auto;
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(16px);
         }}
         .trail-grid {{
             display: grid;
@@ -83,7 +91,7 @@ if "entered" not in st.session_state:
     st.session_state.entered = False
 
 if not st.session_state.entered:
-    set_background("assets/welcome_bg.png")
+    set_background(WELCOME_BG)
 
     st.markdown('<div class="glass">', unsafe_allow_html=True)
     st.title("🌄 Nolan’s Safe Space")
@@ -103,7 +111,7 @@ if not st.session_state.entered:
     st.markdown('</div>', unsafe_allow_html=True)
 
 else:
-    set_background("assets/grand_teton_map.png")
+    set_background(TRAIL_BG)
 
     st.markdown('<div class="glass">', unsafe_allow_html=True)
     st.title("🗺️ Choose a Trail Marker")
@@ -131,8 +139,9 @@ You’re still on your path.""", "Open Water & Rest")
         st.markdown(
             f'''
             <div class="marker">
-                <img src="assets/wood_post.png" width="60" />
+                <img src="{WOOD_POST}" width="60" />
                 <h3 style="margin-top:0.2rem;">{label}</h3>
+            </div>
             ''',
             unsafe_allow_html=True
         )
@@ -145,7 +154,6 @@ You’re still on your path.""", "Open Water & Rest")
                     st.write(result)
             except FileNotFoundError:
                 st.warning("Sophie hasn't added letters yet!")
-        st.markdown('</div>', unsafe_allow_html=True)
         # Add a dotted line except after the last marker
         if idx < len(markers):
             st.markdown('<div class="dotted-line"></div>', unsafe_allow_html=True)
