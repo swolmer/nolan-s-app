@@ -234,7 +234,7 @@ else:
 • Every time you look at me like I’m home  """, "Open Our Moments"),
         ("Water & Rest", lambda: """You don’t have to summit today, Nolan.  
 Take your water, breathe deep, and rest.  
-You’re still on your path.""", "Open Water & Rest")er & Rest")
+You’re still on your path.""", "Open Water & Rester & Rest")
     ]
 
     # Title Title
