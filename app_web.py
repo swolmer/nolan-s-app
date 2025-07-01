@@ -41,8 +41,9 @@ def set_background(image_url):
         .trail-grid {{
             position: relative;
             width: 100%;
-            min-height: 700px; /* adjust as needed */
-            height: 80vh;
+            min-height: 400px;
+            height: 60vh;
+            margin-top: 2rem;
         }}
 
         .marker {{
@@ -256,44 +257,45 @@ You’re still on your path.""", "Open Water & Rester & Rest")
     # Start vertical trail container
     st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
 
-    # Diagonal step size (adjust as needed)
-    step_x = 120  # px right
-    step_y = 90   # px up
+    # Diagonal step size (closer together)
+    step_x = 80  # px right
+    step_y = 60  # px up
 
     for idx, (label, content_func, btn_label) in enumerate(markers):
         left = idx * step_x
         top = idx * step_y
+        button_html = st.button(btn_label, key=btn_label)
         st.markdown(
             f"""
             <div class="marker-wrapper" style="left:{left}px; top:{top}px;">
                 <div class="marker">
                     <img src="{WOOD_POST}" class="marker-icon" />
                     <div class="trail-label">{label}</div>
+                    {'<div style="margin-top:0.5rem;"></div>' if button_html else ''}
                 </div>
             </div>
             """,
             unsafe_allow_html=True
         )
-
-        if st.button(btn_label, key=btn_label):
+        if button_html:
             try:
                 result = content_func()
                 if isinstance(result, str):
                     st.success(result)
                 else:
                     st.write(result)
-            except FileNotFoundError:
-                st.warning("Sophie hasn't added letters yet!")
+            except FileNotFoundError:                st.warning("Sophie hasn't added letters yet!")
 
     # Close container
-    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)    st.markdown('</div>', unsafe_allow_html=True)
 
     # Footer
-    st.markdown(
+    st.markdown(down(
         """
         <div class="footer">
-            🌲 Tap a marker to view its message — then explore the whole trail!
-        </div>
+            🌲 Tap a marker to view its message — then explore the whole trail! Tap a marker to view its message — then explore the whole trail!
+        </div>v>
         """,
-        unsafe_allow_html=True
-    )
+        unsafe_allow_html=True   unsafe_allow_html=True
+    )    )
+
