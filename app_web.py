@@ -46,7 +46,7 @@ def set_background(image_url):
             width: 100%;
             min-height: 500px;
             height: 70vh;
-            margin-top: 2rem;
+            margin-top: 0rem;  # or 0 for no space at all
         }}
 
         .marker-wrapper {{
