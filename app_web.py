@@ -44,7 +44,7 @@ def set_background(image_url):
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10rem;  /* Spread markers more */
+            gap: 7rem;  /* Spread markers more */
             margin-top: 2rem;
             margin-bottom: 3rem;
         }}
