@@ -39,12 +39,12 @@ def set_background(image_url):
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
             backdrop-filter: blur(16px);
         }}
-        .trail-grid {{
-            position: relative;
+        .trail-grid {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 7rem;
+            gap: 0;  /* handled manually with offset */
+        }
             margin-top: 2rem;
             margin-bottom: 3rem;
         }}
@@ -227,9 +227,11 @@ You’re still on your path.""", "Open Water & Rest")
     st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
 
     for idx, (label, content_func, btn_label) in enumerate(markers):
+        offset = idx * 60  # adjust spacing here (in px)
+
         st.markdown(
             f"""
-            <div class="marker-wrapper">
+            <div class="marker-wrapper" style="margin-top:{offset}px;">
                 <div class="marker">
                     <img src="{WOOD_POST}" class="marker-icon" />
                     <div class="trail-label">{label}</div>
@@ -239,7 +241,6 @@ You’re still on your path.""", "Open Water & Rest")
             unsafe_allow_html=True
         )
 
-        # ✅ This must be inside the loop
         if st.button(btn_label, key=btn_label):
             try:
                 result = content_func()
