@@ -287,15 +287,15 @@ You’re still on your path.""", "Open Water & Rester & Rest")
             except FileNotFoundError:                st.warning("Sophie hasn't added letters yet!")
 
     # Close container
-    st.markdown('</div>', unsafe_allow_html=True)    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
     # Footer
-    st.markdown(down(
+    st.markdown(
         """
         <div class="footer">
-            🌲 Tap a marker to view its message — then explore the whole trail! Tap a marker to view its message — then explore the whole trail!
-        </div>v>
+            🌲 Tap a marker to view its message — then explore the whole trail!
+        </div>
         """,
-        unsafe_allow_html=True   unsafe_allow_html=True
-    )    )
+        unsafe_allow_html=True
+    )
 
