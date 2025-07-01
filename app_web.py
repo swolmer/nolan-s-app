@@ -35,94 +35,65 @@ def set_background(image_url):
             border-radius: 18px;
             max-width: 600px;
             margin: 5vh auto 2rem auto;
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.18);
             backdrop-filter: blur(16px);
         }}
         .trail-grid {{
             position: relative;
             width: 100%;
-            min-height: 400px;
-            height: 60vh;
+            height: 700px;
             margin-top: 2rem;
         }}
-
-        .marker {{
-            background: rgba(255,255,255,0.85);
-            border-radius: 12px;
-            padding: 0.6rem 0.6rem;
-            width: 130px;
-            cursor: pointer;
-            text-align: center;
-            user-select: none;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-            position: relative;
-            font-size: 0.85rem;
-            line-height: 1.3rem;
-            backdrop-filter: blur(10px);
-            z-index: 1;
-            opacity: 0;
-            animation: fadeIn 0.8s ease forwards;
-            transition: transform 0.3s ease;
-        }}
-
-        .marker:hover {{
-            transform: scale(1.05);
-        }}
-
         .marker-wrapper {{
             position: absolute;
-            /* top and left will be set inline from Python */
             margin: 0;
+            z-index: 2;
             transition: transform 0.3s;
         }}
-
         .marker-wrapper:not(:last-child)::after {{
             content: "";
             position: absolute;
             left: 50%;
             top: 100%;
-            width: 4px;
-            height: 120px;
+            width: 2px;
+            height: 140px;
             background: repeating-linear-gradient(
-                to bottom,
+                to bottom right,
                 #8B5C2A,
                 #8B5C2A 8px,
                 transparent 8px,
                 transparent 16px
             );
-            transform: translateX(-50%) rotate(45deg);
+            transform: translateX(-50%);
             z-index: 0;
         }}
-
-        .marker-wrapper:nth-child(even):not(:last-child)::after {{
-            transform: translateX(-50%) rotate(-20deg);
+        .marker {{
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 12px;
+            padding: 0.6rem;
+            width: 130px;
+            text-align: center;
+            user-select: none;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+            transition: transform 0.3s ease;
+            z-index: 1;
         }}
-
-        .marker-wrapper:nth-child(odd) {{
-            transform: translateX(-200px);
+        .marker:hover {{
+            transform: scale(1.05);
         }}
-
-        .marker-wrapper:nth-child(even) {{
-            transform: translateX(200px);
-        }}
-
-        .marker img {{
-            width: 36px !important;
-            margin-bottom: 0.25rem;
-        }}
-
         .marker-icon {{
             width: 60px !important;
             margin-bottom: 0.25rem;
         }}
-
         .trail-label {{
             font-size: 0.75rem;
             font-weight: 600;
             color: #4B321D;
             margin-top: 0.3rem;
         }}
-
         .trail-instructions {{
             font-size: 1.1rem;
             font-weight: 500;
@@ -132,9 +103,8 @@ def set_background(image_url):
             max-width: 500px;
             margin: 0 auto 2rem auto;
             text-align: center;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
         }}
-
         .marker button,
         .marker button span,
         .stButton>button,
@@ -152,26 +122,22 @@ def set_background(image_url):
             box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
             text-transform: none !important;
         }}
-
         .marker button:hover,
         .stButton>button:hover {{
             background-color: #A06A36 !important;
             border-color: #6A4724 !important;
             transform: scale(0.97);
         }}
-
         @keyframes fadeIn {{
             from {{ opacity: 0; transform: translateY(20px); }}
             to {{ opacity: 1; transform: translateY(0); }}
         }}
-
         .footer {{
             text-align: center;
             color: #555;
             margin-top: 2rem;
             font-size: 0.75rem;
         }}
-
         .trail-title {{
             font-size: 2.2rem;
             font-weight: 700;
@@ -179,17 +145,16 @@ def set_background(image_url):
             margin-top: 2.5rem;
             margin-bottom: 0.5rem;
             color: #222;
-            background: rgba(255,255,255,0.85);
+            background: rgba(255, 255, 255, 0.85);
             border-radius: 12px;
             padding: 0.5rem 1.5rem;
             display: inline-block;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
         }}
         </style>
         """,
         unsafe_allow_html=True,
     )
-
 
 # Session state to track if the user has "entered" the space
 if "entered" not in st.session_state:
@@ -262,29 +227,35 @@ You’re still on your path.""", "Open Water & Rester & Rest")
     step_y = 60  # px up
 
     for idx, (label, content_func, btn_label) in enumerate(markers):
-        left = idx * step_x
-        top = idx * step_y
-        button_html = st.button(btn_label, key=btn_label)
+        left = 120 + idx * 80   # Adjust horizontal spread
+        top = idx * 140         # Adjust vertical spacing
+
         st.markdown(
             f"""
             <div class="marker-wrapper" style="left:{left}px; top:{top}px;">
                 <div class="marker">
                     <img src="{WOOD_POST}" class="marker-icon" />
                     <div class="trail-label">{label}</div>
-                    {'<div style="margin-top:0.5rem;"></div>' if button_html else ''}
+                    <form action="" method="post">
+                        <button type="submit" name="{btn_label}" style="margin-top: 0.6rem;">
+                            {btn_label}
+                        </button>
+                    </form>
                 </div>
             </div>
             """,
             unsafe_allow_html=True
         )
-        if button_html:
+
+        if st.session_state.get(btn_label) or st.form_submit_button(btn_label):
             try:
                 result = content_func()
                 if isinstance(result, str):
                     st.success(result)
                 else:
                     st.write(result)
-            except FileNotFoundError:                st.warning("Sophie hasn't added letters yet!")
+            except FileNotFoundError:
+                st.warning("Sophie hasn't added letters yet!")
 
     # Close container
     st.markdown('</div>', unsafe_allow_html=True)
