@@ -44,15 +44,12 @@ def set_background(image_url):
         .trail-grid {{
             position: relative;
             width: 100%;
-            height: 80px;
+            height: 700px;
             margin-top: 0rem;
         }}
 
         .marker-wrapper {{
-            position: absolute;
-            margin: 0;
-            z-index: 2;
-            transition: transform 0.3s;
+            transform: translateX(-50%);
         }}
 
         .marker-wrapper.show-line:not(:last-child)::after {{
@@ -233,28 +230,26 @@ You’re still on your path.""", "Open Water & Rester & Rest")
         """,
         unsafe_allow_html=True
     )
-
-    # Start vertical trail container
-    st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
-    # Adjusted spacing
-    step_x = 120
-    step_y = 80
-
     # Start vertical trail container
     st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
 
     # Adjusted spacing
     step_x = 120
-    step_y = 80
+    step_y = 100  # better vertical spacing
 
     for idx, (label, content_func, btn_label) in enumerate(markers):
-        left = 120 + idx * step_x
+        # Markers alternate left and right of center
+        offset_x = 120
+        direction = -1 if idx % 2 == 0 else 1
+        left = 50  # base center position (%)
         top = idx * step_y
+        shift = direction * offset_x
+
         add_line = "show-line" if idx < len(markers) - 1 else ""
 
         st.markdown(
             f"""
-            <div class="marker-wrapper {add_line}" style="left:{left}px; top:{top}px;">
+            <div class="marker-wrapper {add_line}" style="left:calc({left}% + {shift}px); top:{top}px;">
                 <div class="marker">
                     <img src="{WOOD_POST}" class="marker-icon" />
                     <div class="trail-label">{label}</div>
@@ -270,10 +265,7 @@ You’re still on your path.""", "Open Water & Rester & Rest")
         if st.button(btn_label, key=f"btn-{idx}", help=f"Click to open: {label}"):
             try:
                 result = content_func()
-                if isinstance(result, str):
-                    st.success(result)
-                else:
-                    st.write(result)
+                st.success(result if isinstance(result, str) else str(result))
             except FileNotFoundError:
                 st.warning("Sophie hasn't added letters yet!")
 
