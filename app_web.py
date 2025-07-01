@@ -8,7 +8,7 @@ from utils.loader import (
 
 st.set_page_config(page_title="Nolan’s Safe Space", page_icon="🌲", layout="centered")
 
-# Background setup
+# 🌄 Background helper
 def set_background(image_url):
     st.markdown(
         f"""
@@ -17,37 +17,31 @@ def set_background(image_url):
             background-image: url("{image_url}");
             background-size: cover;
             background-position: center;
-            background-attachment: fixed;
             background-repeat: no-repeat;
+            background-attachment: fixed;
         }}
-        .titlebox {{
+        .glass {{
             background-color: rgba(255, 255, 255, 0.85);
             padding: 2rem;
             border-radius: 16px;
             text-align: center;
-            margin-top: 3rem;
-        }}
-        .trail-section {{
-            background-color: rgba(255, 255, 255, 0.7);
-            padding: 1.5rem;
-            border-radius: 12px;
-            text-align: center;
-            margin: 1.5rem 0;
+            max-width: 720px;
+            margin: 4rem auto 2rem auto;
         }}
         </style>
         """,
         unsafe_allow_html=True
     )
 
-# Entrance state
+# Entrance screen state
 if "entered" not in st.session_state:
     st.session_state.entered = False
 
-# Entrance screen
+# 🚪 Entrance screen
 if not st.session_state.entered:
     set_background("https://raw.githubusercontent.com/swolmer/nolan-s-app/main/assets/welcome_bg.png")
 
-    st.markdown('<div class="titlebox">', unsafe_allow_html=True)
+    st.markdown('<div class="glass">', unsafe_allow_html=True)
     st.title("🌄 Nolan’s Safe Space")
     st.markdown("""
     Welcome to your safe space.  
@@ -62,83 +56,67 @@ if not st.session_state.entered:
     """)
     if st.button("🧭 Enter Your Trail"):
         st.session_state.entered = True
-    st.markdown("</div>", unsafe_allow_html=True)
-
-# Trail map screen
-else:
-    set_background("https://raw.githubusercontent.com/swolmer/nolan-s-app/main/assets/topo_map.png")
-    post_img_url = "https://raw.githubusercontent.com/swolmer/nolan-s-app/main/assets/wood_post.png"
-
-    st.markdown('<div class="titlebox">', unsafe_allow_html=True)
-    st.title("🗺️ Choose a Trail Marker")
-    st.markdown("Each post is here to guide you. Follow the trail.")
     st.markdown('</div>', unsafe_allow_html=True)
 
-    st.markdown("### &nbsp;")
+# 🗺️ Trail Map screen
+else:
+    set_background("https://raw.githubusercontent.com/swolmer/nolan-s-app/main/assets/map_scene.png")
 
-    ### Boost Me (Left)
-    col1, col2, col3 = st.columns([2, 1, 2])
-    with col1:
-        st.image(post_img_url, width=120)
-        st.markdown("### 💪 Boost Me")
-        if st.button("Open Boost Me"):
-            st.success(get_random_affirmation())
+    st.markdown('<div class="glass">', unsafe_allow_html=True)
+    st.title("🗺️ Choose a Trail Marker")
+    st.markdown("Follow the path. Each stop is here to guide you.")
+    st.markdown('</div>', unsafe_allow_html=True)
 
-    st.markdown("🟢 ─── 🔘 ─── 🟢")
+    # Trail Marker 1
+    st.markdown("### 💪 Boost Me")
+    if st.button("Open Boost Me"):
+        st.success(get_random_affirmation())
 
-    ### Emergency Shelter (Center)
-    col1, col2, col3 = st.columns([1.5, 1, 2])
-    with col2:
-        st.image(post_img_url, width=120)
-        st.markdown("### 🏕️ Emergency Shelter")
-        if st.button("Open Emergency Shelter"):
-            st.info(get_emergency_message())
+    # Space between markers
+    st.markdown(" ")
 
-    st.markdown("🟢 ─── 🔘 ─── 🟢")
+    # Trail Marker 2
+    st.markdown("### 🏕️ Emergency Shelter")
+    if st.button("Open Emergency Shelter"):
+        st.info(get_emergency_message())
 
-    ### Mark Wins (Right)
-    col1, col2, col3 = st.columns([2, 1, 1])
-    with col3:
-        st.image(post_img_url, width=120)
-        st.markdown("### 📜 Mark Wins")
-        if st.button("Open Mark Wins"):
-            st.success(get_proof_item())
+    st.markdown(" ")
 
-    st.markdown("🟢 ─── 🔘 ─── 🟢")
+    # Trail Marker 3
+    st.markdown("### 📜 Mark Wins")
+    if st.button("Open Mark Wins"):
+        st.success(get_proof_item())
 
-    ### Love Letters (Left)
-    col1, col2, col3 = st.columns([2, 1, 2])
-    with col1:
-        st.image(post_img_url, width=120)
-        st.markdown("### 💌 Love Letters from Sophie")
-        if st.button("Open Love Letters"):
-            try:
-                st.write(get_random_love_note())
-            except FileNotFoundError:
-                st.warning("Sophie hasn't added letters yet!")
+    st.markdown(" ")
 
-    st.markdown("🟢 ─── 🔘 ─── 🟢")
+    # Trail Marker 4
+    st.markdown("### 💌 Love Letters from Sophie")
+    if st.button("Open Love Letters"):
+        try:
+            st.write(get_random_love_note())
+        except FileNotFoundError:
+            st.warning("Sophie hasn't added letters yet!")
 
-    ### Our Moments (Center)
-    col1, col2, col3 = st.columns([1.5, 1, 2])
-    with col2:
-        st.image(post_img_url, width=120)
-        st.markdown("### 📸 Our Moments")
-        if st.button("Open Our Moments"):
-            st.write("""
-            • That hike where we got lost but kept laughing  
-            • The night we stayed up talking with no lights  
-            • Your birthday surprise  
-            • The first time you said you felt safe with me  
-            • Every time you look at me like I’m home  
-            """)
+    st.markdown(" ")
 
-    st.markdown("🟢 ─── 🔘 ─── 🟢")
+    # Trail Marker 5
+    st.markdown("### 📸 Our Moments")
+    if st.button("Open Our Moments"):
+        st.write("""
+        • That hike where we got lost but kept laughing  
+        • The night we stayed up talking with no lights  
+        • Your birthday surprise  
+        • The first time you said you felt safe with me  
+        • Every time you look at me like I’m home  
+        """)
 
-    ### Water & Rest (Right)
-    col1, col2, col3 = st.columns([2, 1, 1])
-    with col3:
-        st.image(post_img_url, width=120)
-        st.markdown("### 🚰 Water & Rest")
-        if st.button("Open Water & Rest"):
-            st.write("You don’t have to summit today, Nolan.\nTake your water, breathe deep, and rest.\nYou’re still on your path.")
+    st.markdown(" ")
+
+    # Trail Marker 6
+    st.markdown("### 🚰 Water & Rest")
+    if st.button("Open Water & Rest"):
+        st.write("""
+        You don’t have to summit today, Nolan.  
+        Take your water, breathe deep, and rest.  
+        You’re still on your path.
+        """)
