@@ -28,7 +28,7 @@ def set_background(image_url):
             background-attachment: fixed;
         }}
         .glass {{
-            background: rgba(255, 255, 255, 0.75);
+            background: rgba(255, 255, 255, 0.90);
             padding: 2rem 3rem;
             border-radius: 18px;
             max-width: 600px;
@@ -93,23 +93,25 @@ if "entered" not in st.session_state:
 if not st.session_state.entered:
     set_background(WELCOME_BG)
 
-    st.markdown('<div class="glass">', unsafe_allow_html=True)
-    st.title("🌄 Nolan’s Safe Space")
-    st.markdown("""
-    Welcome to your safe space.  
-    Take a moment to breathe.  
-
-    Sophie made this for you — for the tough moments.  
-    Because she loves you and wants to be here, even when she can't be.  
-
-    You are enough.  
-    You are so much more than you can see right now.  
-    You are so loved.
-    """)
+    st.markdown(
+        '''
+        <div class="glass">
+            <h1>🌄 Nolan’s Safe Space</h1>
+            <p>
+            Welcome to your safe space.<br>
+            Take a moment to breathe.<br><br>
+            Sophie made this for you — for the tough moments.<br>
+            Because she loves you and wants to be here, even when she can't be.<br><br>
+            You are enough.<br>
+            You are so much more than you can see right now.<br>
+            You are so loved.
+            </p>
+        </div>
+        ''',
+        unsafe_allow_html=True
+    )
     if st.button("🧭 Enter Your Trail"):
         st.session_state.entered = True
-    st.markdown('</div>', unsafe_allow_html=True)
-
 else:
     set_background(TRAIL_BG)
 
@@ -133,30 +135,31 @@ Take your water, breathe deep, and rest.
 You’re still on your path.""", "Open Water & Rest")
     ]
 
-    st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
+    cols = st.columns(len(markers))
+    for idx, (label, content_func, btn_label) in enumerate(markers):
+        with cols[idx]:
+            # Add vertical space for diagonal effect
+            st.markdown("<br>" * idx, unsafe_allow_html=True)
+            st.markdown(
+                f"""
+                <div class="glass">
+                    <div class="marker">
+                        <img src="{WOOD_POST}" width="60" />
+                        <h3 style="margin-top:0.2rem;">{label}</h3>
+                    </div>
+                """,
+                unsafe_allow_html=True
+            )
+            if st.button(btn_label, key=btn_label):
+                try:
+                    result = content_func()
+                    if isinstance(result, str):
+                        st.success(result)
+                    else:
+                        st.write(result)
+                except FileNotFoundError:
+                    st.warning("Sophie hasn't added letters yet!")
+            # Close the glass div after the button
+            st.markdown("</div>", unsafe_allow_html=True)
 
-    for idx, (label, content_func, btn_label) in enumerate(markers, 1):
-        st.markdown(
-            f'''
-            <div class="marker">
-                <img src="{WOOD_POST}" width="60" />
-                <h3 style="margin-top:0.2rem;">{label}</h3>
-            </div>
-            ''',
-            unsafe_allow_html=True
-        )
-        if st.button(btn_label, key=btn_label):
-            try:
-                result = content_func()
-                if isinstance(result, str):
-                    st.success(result)
-                else:
-                    st.write(result)
-            except FileNotFoundError:
-                st.warning("Sophie hasn't added letters yet!")
-        # Add a dotted line except after the last marker
-        if idx < len(markers):
-            st.markdown('<div class="dotted-line"></div>', unsafe_allow_html=True)
-
-    st.markdown('</div>', unsafe_allow_html=True)
     st.markdown('<div class="footer">🌲 Tap a marker to view its message — then explore the whole trail!</div>', unsafe_allow_html=True)
