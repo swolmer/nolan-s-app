@@ -221,35 +221,35 @@ You’re still on your path.""", "Open Water & Rester & Rest")
 
     # Start vertical trail container
     st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
-
     # Adjusted spacing
     step_x = 80
-    step_y = 130
+    step_y = 80
 
     for idx, (label, content_func, btn_label) in enumerate(markers):
         left = 120 + idx * step_x
         top = idx * step_y
 
-        # Streamlit layout: render marker + real button inside one container
-        with st.container():
-            st.markdown(
-                f"""
-                <div class="marker-wrapper" style="left:{left}px; top:{top}px;">
-                    <div class="marker">
-                        <img src="{WOOD_POST}" class="marker-icon" />
-                        <div class="trail-label">{label}</div>
+        # Render both the marker and the button together in one block
+        button_html = f"""
+            <div class="marker-wrapper" style="left:{left}px; top:{top}px;">
+                <div class="marker">
+                    <img src="{WOOD_POST}" class="marker-icon" />
+                    <div class="trail-label">{label}</div>
+                    <div style="margin-top: 0.5rem;">
+                        <button onclick="document.getElementById('btn-{idx}').click()" style="font-size: 0.8125rem; padding: 0.3rem 0.6rem; background-color: #8B5C2A; color: white; border: 2px solid #5A3E1B; border-radius: 6px; font-weight: 600; cursor: pointer;">{btn_label}</button>
                     </div>
                 </div>
-                """,
-                unsafe_allow_html=True
-            )
+            </div>
+        """
+        st.markdown(button_html, unsafe_allow_html=True)
 
-            if st.button(btn_label, key=f"btn-{idx}"):
-                try:
-                    result = content_func()
-                    st.success(result if isinstance(result, str) else str(result))
-                except FileNotFoundError:
-                    st.warning("Sophie hasn't added letters yet!")
+        # Hidden Streamlit button to trigger backend logic
+        if st.button("", key=f"btn-{idx}"):
+            try:
+                result = content_func()
+                st.success(result if isinstance(result, str) else str(result))
+            except FileNotFoundError:
+                st.warning("Sophie hasn't added letters yet!")
 
     # Close container
     st.markdown('</div>', unsafe_allow_html=True)
