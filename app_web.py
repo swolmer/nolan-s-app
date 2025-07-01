@@ -44,31 +44,34 @@ def set_background(image_url):
         .trail-grid {{
             position: relative;
             width: 100%;
-            height: 70px;
-            margin-top: 0rem;
+            min-height: 500px;
+            height: 70vh;
+            margin-top: 2rem;
         }}
 
         .marker-wrapper {{
-            transform: translateX(-50%);
+            position: absolute;
+            margin: 0;
+            transition: transform 0.3s;
         }}
 
-        .marker-wrapper.show-line:not(:last-child)::after {{
+        .marker-wrapper:not(:last-child)::after {
             content: "";
             position: absolute;
             left: 50%;
             top: 100%;
-            width: 2px;
-            height: 140px;
+            width: 4px;
+            height: 60px;
             background: repeating-linear-gradient(
-                to bottom right,
+                to bottom,
                 #8B5C2A,
                 #8B5C2A 8px,
                 transparent 8px,
                 transparent 16px
             );
-            transform: translateX(-50%);
+            transform: translateX(-50%) rotate(45deg);
             z-index: 0;
-        }}
+        }
 
         .marker {{
             background: rgba(255, 255, 255, 0.85);
@@ -230,31 +233,25 @@ You’re still on your path.""", "Open Water & Rester & Rest")
         """,
         unsafe_allow_html=True
     )
-    # Start vertical trail container
+    # Start trail container
     st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
 
-    # Adjusted spacing
-    step_x = 120
-    step_y = 100  # better vertical spacing
+    # Diagonal step size (adjust as needed)
+    step_x = 90   # px right
+    step_y = 70   # px down
 
     for idx, (label, content_func, btn_label) in enumerate(markers):
-        # Markers alternate left and right of center
-        offset_x = 120
-        direction = -1 if idx % 2 == 0 else 1
-        left = 50  # base center position (%)
-        top = idx * step_y
-        shift = direction * offset_x
-
-        add_line = "show-line" if idx < len(markers) - 1 else ""
+        left = 40 + idx * step_x  # 40px offset from left edge
+        top = 10 + idx * step_y   # 10px offset from top edge
 
         st.markdown(
             f"""
-            <div class="marker-wrapper {add_line}" style="left:calc({left}% + {shift}px); top:{top}px;">
+            <div class="marker-wrapper" style="left:{left}px; top:{top}px;">
                 <div class="marker">
                     <img src="{WOOD_POST}" class="marker-icon" />
                     <div class="trail-label">{label}</div>
                     <div style="margin-top: 0.5rem;">
-                        <button onclick="document.getElementById('btn-{idx}').click()" style="font-size: 0.8125rem; padding: 0.3rem 0.6rem; background-color: #8B5C2A; color: white; border: 2px solid #5A3E1B; border-radius: 6px; font-weight: 600; cursor: pointer;">{btn_label}</button>
+                        <!-- Button placeholder, real button below -->
                     </div>
                 </div>
             </div>
@@ -262,6 +259,7 @@ You’re still on your path.""", "Open Water & Rester & Rest")
             unsafe_allow_html=True
         )
 
+        # Button directly below marker, triggers content
         if st.button(btn_label, key=f"btn-{idx}", help=f"Click to open: {label}"):
             try:
                 result = content_func()
