@@ -164,32 +164,19 @@ else:
 Take your water, breathe deep, and rest.  
 You’re still on your path.""", "Open Water & Rester & Rest"),
     ]
-    # Title & Instructions
-    st.markdown(
-        '<div class="trail-title">🗺️ Choose a Trail Marker — I’m With You Every Step</div>',
-        unsafe_allow_html=True
-    )
-    st.markdown(
-        """
-        <div class="trail-instructions">
-            Follow the path. Each stop is here to guide you.
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
 
-    # Start trail grid container
+    # Start trail container
     st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
 
-    # Diagonal spacing
-    step_x = 100
-    step_y = 85
-        
-    for idx, (label, content_func, btn_label) in enumerate(markers):
-        left = 50 + idx * step_x
-        top = 30 + idx * step_y
+    # Diagonal step size (adjust as needed)
+    step_x = 90   # px right
+    step_y = 70   # px down
 
-        # Build marker block
+    for idx, (label, content_func, btn_label) in enumerate(markers):
+        left = 40 + idx * step_x
+        top = 10 + idx * step_y
+
+        # Render the marker card as one unit: icon, label, and button together
         st.markdown(
             f"""
             <div class="marker-wrapper" style="left:{left}px; top:{top}px;">
@@ -199,14 +186,25 @@ You’re still on your path.""", "Open Water & Rester & Rest"),
             """,
             unsafe_allow_html=True
         )
-
-        # Button INSIDE the marker block (Streamlit-native)
+        # Button INSIDE the marker card
         if st.button(btn_label, key=f"btn-{idx}", help=f"Click to open: {label}"):
             try:
                 result = content_func()
                 st.success(result if isinstance(result, str) else str(result))
             except FileNotFoundError:
                 st.warning("Sophie hasn't added letters yet!")
-
-        # Close HTML block
         st.markdown("</div></div>", unsafe_allow_html=True)
+
+    # Close container
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    # Footer
+    st.markdown(
+        """
+        <div class="footer">
+            🌲 Tap a marker to view its message — then explore the whole trail!
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
