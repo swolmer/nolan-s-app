@@ -49,7 +49,7 @@ def set_background(image_url):
         }}
 
         /* Vertical dotted trail line */
-        .trail-grid::before {
+        /* .trail-grid::before {
             content: "";
             position: absolute;
             top: 0;
@@ -60,7 +60,7 @@ def set_background(image_url):
             background-size: 1px 14px;
             background-repeat: repeat-y;
             z-index: 0;
-        }
+        } */
 
         /* Marker box */
         .marker {{
@@ -276,11 +276,9 @@ You’re still on your path.""", "Open Water & Rest")
     st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
 
     for idx, (label, content_func, btn_label) in enumerate(markers):
-        offset = idx * 60  # adjust spacing here (in px)
-
         st.markdown(
             f"""
-            <div class="marker-wrapper" style="margin-top:{offset}px;">
+            <div class="marker-wrapper">
                 <div class="marker">
                     <img src="{WOOD_POST}" class="marker-icon" />
                     <div class="trail-label">{label}</div>
