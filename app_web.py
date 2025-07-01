@@ -44,7 +44,7 @@ def set_background(image_url):
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 4.5rem;
+            gap: 6rem;  /* Spread markers more */
             margin-top: 2rem;
             margin-bottom: 3rem;
         }}
@@ -85,13 +85,11 @@ def set_background(image_url):
             transform: translateX(120px);
         }}
 
-        /* Bigger PNG marker icon */
         .marker-icon {{
             width: 60px !important;
             margin-bottom: 0.25rem;
         }}
 
-        /* Smaller label under icon */
         .trail-label {{
             font-size: 0.75rem;
             font-weight: 600;
@@ -99,7 +97,18 @@ def set_background(image_url):
             margin-top: 0.3rem;
         }}
 
-        /* 🔥 Button font fix: Streamlit buttons + nested spans */
+        .trail-instructions {{
+            font-size: 1.1rem;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0.75rem 1.2rem;
+            border-radius: 12px;
+            max-width: 500px;
+            margin: 0 auto 2rem auto;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }}
+
         .marker button,
         .marker button span,
         .stButton>button,
@@ -153,7 +162,6 @@ def set_background(image_url):
         unsafe_allow_html=True,
     )
 
-
 # Session state to track if the user has "entered" the space
 if "entered" not in st.session_state:
     st.session_state.entered = False
@@ -186,10 +194,22 @@ else:
     set_background(TRAIL_BG)
 
     st.markdown(
-        '<div style="text-align:center;"><div class="trail-title">🗺️ Choose a Trail Marker</div></div>',
+        """
+        <div class="trail-instructions">
+            Follow the path. Each stop is here to guide you.
+        </div>
+        """,
         unsafe_allow_html=True
     )
-    st.markdown("Follow the path. Each stop is here to guide you.")
+
+    st.markdown(
+        """
+        <div class="footer">
+            🌲 Tap a marker to view its message — then explore the whole trail!
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
     markers = [
         ("Boost Me", get_random_affirmation, "Open Boost Me"),
