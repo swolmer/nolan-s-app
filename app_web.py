@@ -8,51 +8,53 @@ from utils.loader import (
 
 st.set_page_config(page_title="Nolan’s Safe Space", page_icon="🌲", layout="centered")
 
-# Trail marker config (position as percent of width/height)
 trail_markers = [
     {
         "label": "💪 Boost Me",
         "content": lambda: st.success(get_random_affirmation()),
-        "left": "24%", "top": "36%"
+        "left": "24%", "top": "36%",
+        "key": "marker_0"
     },
     {
         "label": "🏕️ Emergency Shelter",
         "content": lambda: st.info(get_emergency_message()),
-        "left": "30%", "top": "48%"
+        "left": "30%", "top": "48%",
+        "key": "marker_1"
     },
     {
         "label": "📜 Mark Wins",
         "content": lambda: st.success(get_proof_item()),
-        "left": "40%", "top": "63%"
+        "left": "40%", "top": "63%",
+        "key": "marker_2"
     },
     {
         "label": "💌 Love Letters from Sophie",
         "content": lambda: st.write(get_random_love_note()),
-        "left": "56%", "top": "60%"
+        "left": "56%", "top": "60%",
+        "key": "marker_3"
     },
     {
         "label": "📸 Our Moments",
-        "content": lambda: st.write(
-            """
+        "content": lambda: st.write("""
             • That hike where we got lost but kept laughing  
             • The night we stayed up talking with no lights  
             • Your birthday surprise  
             • The first time you said you felt safe with me  
             • Every time you look at me like I’m home  
-            """
-        ),
-        "left": "70%", "top": "45%"
+        """),
+        "left": "70%", "top": "45%",
+        "key": "marker_4"
     },
     {
         "label": "🚰 Water & Rest",
-        "content": lambda: st.write(
-            "You don’t have to summit today, Nolan.\nTake your water, breathe deep, and rest.\nYou’re still on your path."
-        ),
-        "left": "82%", "top": "24%"
+        "content": lambda: st.write("""
+            You don’t have to summit today, Nolan.\nTake your water, breathe deep, and rest.\nYou’re still on your path.
+        """),
+        "left": "82%", "top": "24%",
+        "key": "marker_5"
     },
 ]
 
-# ---- Background helper for entrance ----
 def set_background(image_url):
     st.markdown(
         f"""
@@ -69,7 +71,6 @@ def set_background(image_url):
         unsafe_allow_html=True
     )
 
-# ---- ENTRANCE SCREEN ----
 if "entered" not in st.session_state:
     st.session_state.entered = False
 
@@ -95,7 +96,6 @@ if not st.session_state.entered:
     if st.button("🧭 Enter Your Trail"):
         st.session_state.entered = True
 
-# ---- TRAIL MAP SCREEN ----
 else:
     set_background("https://raw.githubusercontent.com/swolmer/nolan-s-app/main/assets/map_scene.png")
 
@@ -117,12 +117,8 @@ else:
         unsafe_allow_html=True
     )
 
-    # Place trail markers via HTML, with Streamlit callback per button
-    for i, marker in enumerate(trail_markers):
-        # Unique key for each button's click
-        key = f"marker_{i}"
-
-        # Place marker button at (left, top) as percent
+    for marker in trail_markers:
+        key = marker["key"]
         st.markdown(
             f"""
             <div style="position:absolute; left:{marker['left']}; top:{marker['top']}; z-index:8; min-width:160px; text-align:center;">
@@ -136,10 +132,9 @@ else:
             unsafe_allow_html=True
         )
 
-        # Display content on click via session state
         if st.session_state.get(key, False):
-            marker['content']()
-        # Small JS-to-python hack for buttons:
+            marker["content"]()
+
         st.markdown(
             f"""
             <script>
@@ -153,11 +148,6 @@ else:
             """,
             unsafe_allow_html=True
         )
-        # When URL hash matches, show content
-        import urllib.parse
-        hash_val = st.experimental_get_query_params().get('', [''])[0]
-        if hash_val == key:
-            st.session_state[key] = True
 
     # Instructions footer for mobile
     st.markdown(
