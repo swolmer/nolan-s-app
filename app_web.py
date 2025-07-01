@@ -21,6 +21,7 @@ def set_background(image_url):
         body {{
             background: #e6ecf0 !important;
         }}
+
         .stApp {{
             background-image: url("{image_url}");
             background-size: cover;
@@ -29,6 +30,7 @@ def set_background(image_url):
             background-attachment: fixed;
             font-family: 'PT Serif', serif;
         }}
+
         .glass {{
             background: rgba(255, 255, 255, 0.90);
             padding: 2rem 3rem;
@@ -38,19 +40,22 @@ def set_background(image_url):
             box-shadow: 0 8px 32px rgba(31, 38, 135, 0.18);
             backdrop-filter: blur(16px);
         }}
+
         .trail-grid {{
             position: relative;
             width: 100%;
             height: 80px;
             margin-top: 0rem;
         }}
+
         .marker-wrapper {{
             position: absolute;
             margin: 0;
             z-index: 2;
             transition: transform 0.3s;
         }}
-        .marker-wrapper:not(:last-child)::after {{
+
+        .marker-wrapper.show-line:not(:last-child)::after {{
             content: "";
             position: absolute;
             left: 50%;
@@ -67,6 +72,7 @@ def set_background(image_url):
             transform: translateX(-50%);
             z-index: 0;
         }}
+
         .marker {{
             background: rgba(255, 255, 255, 0.85);
             border-radius: 12px;
@@ -81,19 +87,23 @@ def set_background(image_url):
             transition: transform 0.3s ease;
             z-index: 1;
         }}
+
         .marker:hover {{
             transform: scale(1.05);
         }}
+
         .marker-icon {{
             width: 60px !important;
             margin-bottom: 0.25rem;
         }}
+
         .trail-label {{
             font-size: 0.75rem;
             font-weight: 600;
             color: #4B321D;
             margin-top: 0.3rem;
         }}
+
         .trail-instructions {{
             font-size: 1.1rem;
             font-weight: 500;
@@ -105,6 +115,7 @@ def set_background(image_url):
             text-align: center;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
         }}
+
         .marker button,
         .marker button span,
         .stButton>button,
@@ -122,22 +133,26 @@ def set_background(image_url):
             box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
             text-transform: none !important;
         }}
+
         .marker button:hover,
         .stButton>button:hover {{
             background-color: #A06A36 !important;
             border-color: #6A4724 !important;
             transform: scale(0.97);
         }}
+
         @keyframes fadeIn {{
             from {{ opacity: 0; transform: translateY(20px); }}
             to {{ opacity: 1; transform: translateY(0); }}
         }}
+
         .footer {{
             text-align: center;
             color: #555;
             margin-top: 2rem;
             font-size: 0.75rem;
         }}
+
         .trail-title {{
             font-size: 2.2rem;
             font-weight: 700;
@@ -222,16 +237,18 @@ You’re still on your path.""", "Open Water & Rester & Rest")
     # Start vertical trail container
     st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
     # Adjusted spacing
-    step_x = 80
+    step_x = 160
     step_y = 80
 
     for idx, (label, content_func, btn_label) in enumerate(markers):
         left = 120 + idx * step_x
         top = idx * step_y
 
-        # Render both the marker and the button together in one block
-        button_html = f"""
-            <div class="marker-wrapper" style="left:{left}px; top:{top}px;">
+        add_line = "show-line" if idx < len(markers) - 1 else ""
+
+        st.markdown(
+            f"""
+            <div class="marker-wrapper {add_line}" style="left:{left}px; top:{top}px;">
                 <div class="marker">
                     <img src="{WOOD_POST}" class="marker-icon" />
                     <div class="trail-label">{label}</div>
@@ -240,8 +257,9 @@ You’re still on your path.""", "Open Water & Rester & Rest")
                     </div>
                 </div>
             </div>
-        """
-        st.markdown(button_html, unsafe_allow_html=True)
+            """,
+            unsafe_allow_html=True
+        )
 
         # Hidden Streamlit button to trigger backend logic
         if st.button("", key=f"btn-{idx}"):
