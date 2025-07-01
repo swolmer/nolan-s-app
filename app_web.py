@@ -218,53 +218,71 @@ Take your water, breathe deep, and rest.
 You’re still on your path.""", "Open Water & Rester & Rest")
     ]
 
-    # Title
-    st.markdown(
-        '<div class="trail-title">🗺️ Choose a Trail Marker — I’m With You Every Step</div>',
-        unsafe_allow_html=True
-    )
+    # Title & Instructions
+st.markdown(
+    '<div class="trail-title">🗺️ Choose a Trail Marker — I’m With You Every Step</div>',
+    unsafe_allow_html=True
+)
+st.markdown(
+    """
+    <div class="trail-instructions">
+        Follow the path. Each stop is here to guide you.
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
-    # Instructions
+# Start vertical trail container
+st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
+
+for idx, (label, content_func, btn_label) in enumerate(markers):
+    # Render button styled like a marker
+    if st.button(label, key=f"btn-{idx}"):
+        try:
+            result = content_func()
+            st.success(result if isinstance(result, str) else str(result))
+        except FileNotFoundError:
+            st.warning("Sophie hasn't added letters yet!")
+
+    # Inject styling for that specific button
     st.markdown(
-        """
-        <div class="trail-instructions">
-            Follow the path. Each stop is here to guide you.
-        </div>
+        f"""
+        <style>
+        div[data-testid="stButton"][key="btn-{idx}"] {{
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 12px;
+            padding: 1rem;
+            width: 200px;
+            margin: 1.5rem auto;
+            text-align: center;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            backdrop-filter: blur(10px);
+        }}
+
+        div[data-testid="stButton"][key="btn-{idx}"] button {{
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            background-color: #8B5C2A;
+            color: white;
+            border: 2px solid #5A3E1B;
+            border-radius: 6px;
+            padding: 0.5rem 1rem;
+            width: 100%;
+            transition: transform 0.2s ease;
+        }}
+
+        div[data-testid="stButton"][key="btn-{idx}"] button:hover {{
+            background-color: #A06A36;
+            transform: scale(1.03);
+        }}
+        </style>
         """,
         unsafe_allow_html=True
     )
-    # Start trail container
-    st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
 
-    # Diagonal step size (adjust as needed)
-    step_x = 90   # px right
-    step_y = 70   # px down
-
-    for idx, (label, content_func, btn_label) in enumerate(markers):
-        left = 40 + idx * step_x
-        top = 10 + idx * step_y
-
-        # Render the marker card as one unit: icon, label, and button together
-        st.markdown(
-            f"""
-            <div class="marker-wrapper" style="left:{left}px; top:{top}px;">
-                <div class="marker">
-                    <img src="{WOOD_POST}" class="marker-icon" />
-                    <div class="trail-label">{label}</div>
-            """,
-            unsafe_allow_html=True
-        )
-        # Button INSIDE the marker card
-        if st.button(btn_label, key=f"btn-{idx}", help=f"Click to open: {label}"):
-            try:
-                result = content_func()
-                st.success(result if isinstance(result, str) else str(result))
-            except FileNotFoundError:
-                st.warning("Sophie hasn't added letters yet!")
-        st.markdown("</div></div>", unsafe_allow_html=True)
-
-    # Close container
-    st.markdown('</div>', unsafe_allow_html=True)
+# End container
+st.markdown('</div>', unsafe_allow_html=True)
 
     # Footer
     st.markdown(
