@@ -250,7 +250,7 @@ You’re still on your path.""", "Open Water & Rester & Rest")
                 else:
                     st.write(result)
             except FileNotFoundError:
-                st.warning("Sophie hasn't added letters yet!")`
+                st.warning("Sophie hasn't added letters yet!")
 
 
     # Close container
