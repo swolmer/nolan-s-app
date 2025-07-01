@@ -46,7 +46,7 @@ def set_background(image_url):
             flex-direction: column;
             align-items: center;
             gap: 2.5rem;
-            margin-top: 0;  # Remove extra space above markers
+            margin-top: 0;
             margin-bottom: 2rem;
             width: 100%;
         }}
@@ -66,7 +66,7 @@ def set_background(image_url):
             user-select: none;
             box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
             backdrop-filter: blur(10px);
-            opacity: 0;
+            opacity: 1;
             animation: fadeIn 0.8s ease forwards;
             transition: transform 0.3s ease;
             z-index: 1;
@@ -86,18 +86,6 @@ def set_background(image_url):
             font-weight: 600;
             color: #4B321D;
             margin-top: 0.3rem;
-        }}
-
-        .trail-instructions {{
-            font-size: 1.1rem;
-            font-weight: 500;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 0.75rem 1.2rem;
-            border-radius: 12px;
-            max-width: 500px;
-            margin: 0 auto 2rem auto;
-            text-align: center;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
         }}
 
         .marker button,
@@ -124,64 +112,25 @@ def set_background(image_url):
             border-color: #6A4724 !important;
             transform: scale(0.97);
         }}
-            font-size: 0.8125rem !important;
-            line-height: 1.1rem !important;
-            padding: 0.3rem 0.6rem !important;nslateY(20px); }}
-            background-color: #8B5C2A !important;eY(0); }}
-            color: white !important;
-            border: 2px solid #5A3E1B !important;
-            border-radius: 6px !important;
-            font-weight: 600 !important;
-            margin-top: 0.3rem !important;
-            box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
-            text-transform: none !important;
-        }}
 
-        .marker button:hover,
-        .stButton>button:hover {{
-            background-color: #A06A36 !important;
-            border-color: #6A4724 !important;
-            transform: scale(0.97);
-        }}  margin-bottom: 0.5rem;
-            color: #222;
-        @keyframes fadeIn {{(255, 255, 255, 0.85);
+        @keyframes fadeIn {{
             from {{ opacity: 0; transform: translateY(20px); }}
             to {{ opacity: 1; transform: translateY(0); }}
-        }}  display: inline-block;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-        .footer {{
-            text-align: center;
-            color: #555;
-            margin-top: 2rem;e,
-            font-size: 0.75rem;
         }}
-# Session state to track if the user has "entered" the space
-        .trail-title {{session_state:
-            font-size: 2.2rem; False
-            font-weight: 700;
-            text-align: center;:
-            margin-top: 2.5rem;
-            margin-bottom: 0.5rem;
-            color: #222;
-            background: rgba(255, 255, 255, 0.85);
-            border-radius: 12px;
-            padding: 0.5rem 1.5rem;ce</h1>
-            display: inline-block;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-        }}  Take a moment to breathe.<br><br>
-        </style>ie made this for you — for the tough moments.<br>
-        """,Because she loves you and wants to be here, even when she can't be.<br><br>
+        </style>
+        """,
         unsafe_allow_html=True,
-    )       You are so much more than you can see right now.<br>
-            You are so loved.
+    )
+
 # Session state to track if the user has "entered" the space
 if "entered" not in st.session_state:
     st.session_state.entered = False
-        unsafe_allow_html=True
+
 if not st.session_state.entered:
     set_background(WELCOME_BG)
     if st.button("🧭 Enter Your Trail"):
-    st.markdown(on_state.entered = True
+        st.session_state.entered = True
+    st.markdown(
         '''
         <div class="glass">
             <h1>🌄 Nolan’s Safe Space</h1>
@@ -190,22 +139,18 @@ if not st.session_state.entered:
             Take a moment to breathe.<br><br>
             Sophie made this for you — for the tough moments.<br>
             Because she loves you and wants to be here, even when she can't be.<br><br>
-            You are enough.<br>_item, "Open Mark Wins"),
-            You are so much more than you can see right now.<br> Love Letters"),
-            You are so loved.a: """• That hike where we got lost but kept laughing  
-            </p>tayed up talking with no lights  
-        </div>y surprise  
-        ''',time you said you felt safe with me  
-        unsafe_allow_html=Trueke I’m home  """, "Open Our Moments"),
-    )   ("Water & Rest", lambda: """You don’t have to summit today, Nolan.  
-Take your water, breathe deep, and rest.  
-    if st.button("🧭 Enter Your Trail"):er & Rester & Rest")
-        st.session_state.entered = True
-            
-else: Title & Instructions
+            You are enough.<br>
+            You are so much more than you can see right now.<br>
+            You are so loved.
+            </p>
+        </div>
+        ''',
+        unsafe_allow_html=True
+    )
+else:
     set_background(TRAIL_BG)
-        '<div class="trail-title">🗺️ Choose a Trail Marker — I’m With You Every Step</div>',
-    # Define trail markersTrue
+    st.markdown('<div class="trail-title">🗺️ Choose a Trail Marker — I’m With You Every Step</div>', unsafe_allow_html=True)
+
     markers = [
         ("Boost Me", get_random_affirmation, "Open Boost Me"),
         ("Emergency Shelter", get_emergency_message, "Open Emergency Shelter"),
@@ -213,49 +158,30 @@ else: Title & Instructions
         ("Love Letters from Sophie", get_random_love_note, "Open Love Letters"),
         ("Our Moments", lambda: """• That hike where we got lost but kept laughing  
 • The night we stayed up talking with no lights  
-• Your birthday surprise  True
+• Your birthday surprise  
 • The first time you said you felt safe with me  
 • Every time you look at me like I’m home  """, "Open Our Moments"),
         ("Water & Rest", lambda: """You don’t have to summit today, Nolan.  
 Take your water, breathe deep, and rest.  
 You’re still on your path.""", "Open Water & Rester & Rest")
-    ]   <style>
-            il-grid {
-    # Title & Instructionstive;
-    st.markdown(h: 100%;
-        '<div class="trail-title">🗺️ Choose a Trail Marker — I’m With You Every Step</div>',
-        unsafe_allow_html=Truem;
-    )       display: flex;
-    st.markdown(-direction: column;
-        """ align-items: center;
-        <div class="trail-instructions">
-            Follow the path. Each stop is here to guide you.
-        </div>e>
-        """, class="trail-grid">
-        unsafe_allow_html=True
-    )   unsafe_allow_html=True
-    )
-    # Open trail container
-    st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
+    ]
 
-for idx, (label, content_func, btn_label) in enumerate(markers):
-    st.markdown(
-        f"""
-        <div class="marker-wrapper">
-            <div class="marker">
-                <img src="{WOOD_POST}" class="marker-icon" />
-                <div class="trail-label">{label}</div>
-        """,
-        unsafe_allow_html=True
-    )
-    # Button inside the marker card
-        ).button(btn_label, key=f"btn-{idx}"):
-        # Button directly below label, inside the marker cardue
+    st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
+    for idx, (label, content_func, btn_label) in enumerate(markers):
+        st.markdown(
+            f"""
+            <div class="marker-wrapper">
+                <div class="marker">
+                    <img src="{WOOD_POST}" class="marker-icon" />
+                    <div class="trail-label">{label}</div>
+            """,
+            unsafe_allow_html=True
+        )
         if st.button(btn_label, key=f"btn-{idx}"):
-            try:uccess(result if isinstance(result, str) else str(result))
-                result = content_func()   if st.button(btn_label, key=f"btn-{idx}"):
-                st.success(result if isinstance(result, str) else str(result))            try:
-            except FileNotFoundError:nt_func()tml=True)
-                st.warning("Sophie hasn't added letters yet!")r(result))
-ileNotFoundError:v>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)st.warning("Sophie hasn't added letters yet!")
+            try:
+                result = content_func()
+                st.success(result if isinstance(result, str) else str(result))
+            except FileNotFoundError:
+                st.warning("Sophie hasn't added letters yet!")
+        st.markdown("</div></div>", unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
