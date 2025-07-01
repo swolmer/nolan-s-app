@@ -217,7 +217,7 @@ else:
 Take your water, breathe deep, and rest.  
 You’re still on your path.""", "Open Water & Rester & Rest")
     ]
-
+        
     # Title & Instructions
     st.markdown(
         '<div class="trail-title">🗺️ Choose a Trail Marker — I’m With You Every Step</div>',
@@ -232,58 +232,32 @@ You’re still on your path.""", "Open Water & Rester & Rest")
         unsafe_allow_html=True
     )
 
+    # Open the trail container
     st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
 
-    step_y = 100
-    offset_x = 120
-
+    # Vertical trail layout (simple and clean)
     for idx, (label, content_func, btn_label) in enumerate(markers):
-        direction = -1 if idx % 2 == 0 else 1
-        left = 50  # base center
-        top = idx * step_y
-        shift = direction * offset_x
-        add_line = "show-line" if idx < len(markers) - 1 else ""
+        st.markdown(
+            f"""
+            <div class="marker-wrapper">
+                <div class="marker">
+                    <img src="{WOOD_POST}" class="marker-icon" />
+                    <div class="trail-label">{label}</div>
+                    <form action="" method="post">
+                        <button type="submit" name="{btn_label}">{btn_label}</button>
+                    </form>
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
-        # Use Streamlit's button, styled like a full marker
-        if st.button(label, key=f"btn-{idx}"):
+        if st.button(btn_label, key=f"btn-{idx}"):
             try:
                 result = content_func()
                 st.success(result if isinstance(result, str) else str(result))
             except FileNotFoundError:
                 st.warning("Sophie hasn't added letters yet!")
-
-        # Then render the styled marker wrapper (used only for layout)
-        st.markdown(
-            f"""
-            <style>
-            #{f"btn-{idx}"} {{
-                position: absolute;
-                left: calc({left}% + {shift}px);
-                top: {top}px;
-                background: rgba(255, 255, 255, 0.85);
-                border-radius: 12px;
-                padding: 0.6rem;
-                width: 130px;
-                text-align: center;
-                user-select: none;
-                box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-                backdrop-filter: blur(10px);
-                font-family: 'Inter', sans-serif;
-                font-size: 0.9rem;
-                font-weight: 600;
-                color: #4B321D;
-                border: none;
-                z-index: 1;
-                transition: transform 0.3s ease;
-            }}
-            #{f"btn-{idx}"}:hover {{
-                transform: scale(1.05);
-                background-color: #f5e8dd;
-            }}
-            </style>
-            """,
-            unsafe_allow_html=True
-        )
 
     # Close trail container
     st.markdown('</div>', unsafe_allow_html=True)
