@@ -241,31 +241,27 @@ You’re still on your path.""", "Open Water & Rester & Rest")
     step_y = 70   # px down
 
     for idx, (label, content_func, btn_label) in enumerate(markers):
-        left = 40 + idx * step_x  # 40px offset from left edge
-        top = 10 + idx * step_y   # 10px offset from top edge
+        left = 40 + idx * step_x
+        top = 10 + idx * step_y
 
-        st.markdown(
-            f"""
-            <div class="marker-wrapper" style="left:{left}px; top:{top}px;">
-                <div class="marker">
-                    <img src="{WOOD_POST}" class="marker-icon" />
-                    <div class="trail-label">{label}</div>
-                    <div style="margin-top: 0.5rem;">
-                        <!-- Button placeholder, real button below -->
-                    </div>
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-
-        # Button directly below marker, triggers content
-        if st.button(btn_label, key=f"btn-{idx}", help=f"Click to open: {label}"):
-            try:
-                result = content_func()
-                st.success(result if isinstance(result, str) else str(result))
-            except FileNotFoundError:
-                st.warning("Sophie hasn't added letters yet!")
+        with st.container():
+            st.markdown(
+                f"""
+                <div class="marker-wrapper" style="left:{left}px; top:{top}px;">
+                    <div class="marker">
+                        <img src="{WOOD_POST}" class="marker-icon" />
+                        <div class="trail-label">{label}</div>
+                """,
+                unsafe_allow_html=True
+            )
+            # Button inside the marker card
+            if st.button(btn_label, key=f"btn-{idx}", help=f"Click to open: {label}"):
+                try:
+                    result = content_func()
+                    st.success(result if isinstance(result, str) else str(result))
+                except FileNotFoundError:
+                    st.warning("Sophie hasn't added letters yet!")
+            st.markdown("</div></div>", unsafe_allow_html=True)
 
     # Close container
     st.markdown('</div>', unsafe_allow_html=True)
