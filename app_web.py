@@ -93,6 +93,9 @@ def set_background(image_url):
             animation: fadeIn 0.8s ease forwards;
             transition: transform 0.3s ease;
             z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }}
 
         .marker:hover {{
@@ -173,10 +176,30 @@ if not st.session_state.entered:
 else:
     set_background(TRAIL_BG)
     st.markdown(
-        '<div class="trail-title" style="text-align:center; font-size:1.3rem; font-weight:700; margin-bottom:0.5rem;">🗺️ Choose a Trail Marker — I’m With You Every Step</div>',
+        '''
+        <div style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        ">
+            <div style="
+                background: rgba(255,255,255,0.96);
+                border-radius: 18px;
+                box-shadow: 0 4px 16px rgba(31,38,135,0.10);
+                padding: 1.2rem 2.5rem;
+                text-align: center;
+                font-size: 2.1rem;
+                font-weight: 800;
+                color: #4B321D;
+                letter-spacing: 0.01em;
+            ">
+                🗺️ Choose a Trail Marker — I’m With You Every Step
+            </div>
+        </div>
+        ''',
         unsafe_allow_html=True
     )
-
     markers = [
         ("Boost Me", get_random_affirmation, "Open Boost Me"),
         ("Emergency Shelter", get_emergency_message, "Open Emergency Shelter"),
