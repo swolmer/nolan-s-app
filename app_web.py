@@ -40,17 +40,17 @@ def set_background(image_url):
             display: grid;
             grid-auto-flow: column;
             grid-auto-rows: 1fr;
-            gap: 2.5rem;
+            gap: 3.5rem; /* Increase gap for more space */
             justify-content: center;
             align-items: start;
-            margin-top: 4rem;
+            margin-top: 5rem;
             margin-bottom: 4rem;
         }}
         .marker {{
             background: rgba(255,255,255,0.85);
             border-radius: 12px;
-            padding: 1.2rem 1.5rem;
-            width: 170px;
+            padding: 0.7rem 0.7rem; /* Less padding */
+            width: 110px;           /* Smaller width */
             cursor: pointer;
             text-align: center;
             user-select: none;
@@ -59,13 +59,11 @@ def set_background(image_url):
             /* Glass effect */
             backdrop-filter: blur(12px);
             /* Smaller font */
-            font-size: 0.92rem;
+            font-size: 0.78rem;     /* Smaller font */
         }}
         .marker img {{
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            margin-bottom: 0.5rem;
+            width: 38px !important; /* Smaller icon */
+            margin-bottom: 0.3rem;
         }}
         /* Diagonal effect: stagger each marker */
         .marker:nth-child(2n-1) {{ transform: translateY(0rem); }}
@@ -85,6 +83,19 @@ def set_background(image_url):
             color: #555;
             margin-top: 2rem;
             font-size: 0.9rem;
+        }}
+        .trail-title {{
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-top: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: #222;
+            background: rgba(255,255,255,0.85);
+            border-radius: 12px;
+            padding: 0.5rem 1.5rem;
+            display: inline-block;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
         }}
         </style>
         """,
@@ -120,7 +131,10 @@ else:
     set_background(TRAIL_BG)
 
     st.markdown('<div class="glass">', unsafe_allow_html=True)
-    st.title("🗺️ Choose a Trail Marker")
+    st.markdown(
+        '<div class="trail-title">🗺️ Choose a Trail Marker</div>',
+        unsafe_allow_html=True
+    )
     st.markdown("Follow the path. Each stop is here to guide you.")
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -139,7 +153,7 @@ Take your water, breathe deep, and rest.
 You’re still on your path.""", "Open Water & Rest")
     ]
 
-    cols = st.columns(len(markers))
+    st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
     for idx, (label, content_func, btn_label) in enumerate(markers):
         with cols[idx]:
             # Add vertical space for diagonal effect
@@ -163,6 +177,7 @@ You’re still on your path.""", "Open Water & Rest")
                     st.warning("Sophie hasn't added letters yet!")
             # Close the marker div after the button
             st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
     st.markdown(
         '<div class="footer">🌲 Tap a marker to view its message — then explore the whole trail!</div>',
