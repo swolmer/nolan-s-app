@@ -55,7 +55,7 @@ def set_background(image_url):
             transition: transform 0.3s;
         }}
 
-        .marker-wrapper:not(:last-child)::after {
+        .marker-wrapper:not(:last-child)::after {{
             content: "";
             position: absolute;
             left: 50%;
@@ -71,7 +71,7 @@ def set_background(image_url):
             );
             transform: translateX(-50%) rotate(45deg);
             z-index: 0;
-        }
+        }}
 
         .marker {{
             background: rgba(255, 255, 255, 0.85);
