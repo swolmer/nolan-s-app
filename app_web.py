@@ -191,31 +191,11 @@ else:
 Take your water, breathe deep, and rest.  
 You’re still on your path.""", "Open Water & Rester & Rest")
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     st.markdown('</div>', unsafe_allow_html=True)        st.markdown("</div></div>", unsafe_allow_html=True)                st.warning("Sophie hasn't added letters yet!")            except FileNotFoundError:                st.success(result if isinstance(result, str) else str(result))                result = content_func()            try:        if st.button(btn_label, key=f"btn-{idx}"):        )            unsafe_allow_html=True            """,                    <div class="trail-label">{label}</div>                    <img src="{WOOD_POST}" class="marker-icon" />                <div class="marker">            <div class="marker-wrapper">            f"""        st.markdown(    for idx, (label, content_func, btn_label) in enumerate(markers):    st.markdown('<div class="trail-line"></div>', unsafe_allow_html=True)    # Add the vertical trail line (behind the markers)    st.markdown('<div class="trail-grid">', unsafe_allow_html=True)    ]    ]
 
     st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
+    st.markdown('<div class="trail-line"></div>', unsafe_allow_html=True)
+
     for idx, (label, content_func, btn_label) in enumerate(markers):
         st.markdown(
             f"""
