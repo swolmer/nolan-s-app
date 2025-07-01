@@ -59,7 +59,7 @@ def set_background(image_url):
             content: "";
             position: absolute;
             left: 50%;
-            top: 100%;
+            top: 10%;
             width: 4px;
             height: 60px;
             background: repeating-linear-gradient(
