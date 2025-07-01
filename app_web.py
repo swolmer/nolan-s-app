@@ -49,8 +49,8 @@ def set_background(image_url):
         .marker {{
             background: rgba(255,255,255,0.85);
             border-radius: 12px;
-            padding: 0.7rem 0.7rem; /* Less padding */
-            width: 110px;           /* Smaller width */
+            padding: 0.7rem 0.7rem;
+            width: 110px;
             cursor: pointer;
             text-align: center;
             user-select: none;
@@ -59,7 +59,7 @@ def set_background(image_url):
             /* Glass effect */
             backdrop-filter: blur(12px);
             /* Smaller font */
-            font-size: 0.78rem;     /* Smaller font */
+            font-size: 0.68rem;   /* Smaller font for marker text */
         }}
         .marker img {{
             width: 38px !important; /* Smaller icon */
@@ -82,7 +82,7 @@ def set_background(image_url):
             text-align: center;
             color: #555;
             margin-top: 2rem;
-            font-size: 0.9rem;
+            font-size: 0.75rem; /* Smaller font, about 12px */
         }}
         .trail-title {{
             font-size: 2.2rem;
@@ -130,13 +130,11 @@ if not st.session_state.entered:
 else:
     set_background(TRAIL_BG)
 
-    st.markdown('<div class="glass">', unsafe_allow_html=True)
     st.markdown(
-        '<div class="trail-title">🗺️ Choose a Trail Marker</div>',
+        '<div style="text-align:center;"><div class="trail-title">🗺️ Choose a Trail Marker</div></div>',
         unsafe_allow_html=True
     )
     st.markdown("Follow the path. Each stop is here to guide you.")
-    st.markdown('</div>', unsafe_allow_html=True)
 
     markers = [
         ("Boost Me", get_random_affirmation, "Open Boost Me"),
