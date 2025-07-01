@@ -17,6 +17,8 @@ def set_background(image_url):
     st.markdown(
         f"""
         <style>
+        @import url('https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&display=swap');
+
         body {{
             background: #e6ecf0 !important;
         }}
@@ -26,6 +28,7 @@ def set_background(image_url):
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
+            font-family: 'PT Serif', serif;
         }}
         .glass {{
             background: rgba(255, 255, 255, 0.90);
@@ -116,7 +119,7 @@ def set_background(image_url):
         unsafe_allow_html=True,
     )
 
-
+# Session state to track if the user has "entered" the space
 if "entered" not in st.session_state:
     st.session_state.entered = False
 
@@ -140,8 +143,10 @@ if not st.session_state.entered:
         ''',
         unsafe_allow_html=True
     )
+
     if st.button("🧭 Enter Your Trail"):
         st.session_state.entered = True
+
 else:
     set_background(TRAIL_BG)
 
@@ -167,10 +172,9 @@ You’re still on your path.""", "Open Water & Rest")
     ]
 
     st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
-    cols = st.columns(len(markers))  # <-- Add this line
+    cols = st.columns(len(markers))  # Create columns for the markers
     for idx, (label, content_func, btn_label) in enumerate(markers):
         with cols[idx]:
-            # Add vertical space for diagonal effect
             st.markdown("<br>" * idx, unsafe_allow_html=True)
             st.markdown(
                 f"""
@@ -189,7 +193,6 @@ You’re still on your path.""", "Open Water & Rest")
                         st.write(result)
                 except FileNotFoundError:
                     st.warning("Sophie hasn't added letters yet!")
-            # Close the marker div after the button
             st.markdown("</div>", unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
