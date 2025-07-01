@@ -56,6 +56,10 @@ def set_background(image_url):
             user-select: none;
             box-shadow: 0 2px 12px rgba(0,0,0,0.08);
             position: relative;
+            /* Glass effect */
+            backdrop-filter: blur(12px);
+            /* Smaller font */
+            font-size: 0.92rem;
         }}
         .marker img {{
             display: block;
@@ -142,11 +146,9 @@ You’re still on your path.""", "Open Water & Rest")
             st.markdown("<br>" * idx, unsafe_allow_html=True)
             st.markdown(
                 f"""
-                <div class="glass">
-                    <div class="marker">
-                        <img src="{WOOD_POST}" width="60" />
-                        <h3 style="margin-top:0.2rem;">{label}</h3>
-                    </div>
+                <div class="marker">
+                    <img src="{WOOD_POST}" width="60" />
+                    <h3 style="margin-top:0.2rem;">{label}</h3>
                 """,
                 unsafe_allow_html=True
             )
@@ -159,7 +161,10 @@ You’re still on your path.""", "Open Water & Rest")
                         st.write(result)
                 except FileNotFoundError:
                     st.warning("Sophie hasn't added letters yet!")
-            # Close the glass div after the button
+            # Close the marker div after the button
             st.markdown("</div>", unsafe_allow_html=True)
 
-    st.markdown('<div class="footer">🌲 Tap a marker to view its message — then explore the whole trail!</div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="footer">🌲 Tap a marker to view its message — then explore the whole trail!</div>',
+        unsafe_allow_html=True
+    )
