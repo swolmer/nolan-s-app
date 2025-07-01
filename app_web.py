@@ -42,7 +42,7 @@ if "entered" not in st.session_state:
 
 # 🚪 Entrance screen
 if not st.session_state.entered:
-    set_background("https://raw.githubusercontent.com/swolmer/nolan-s-app/main/welcome_bg.png")
+    set_background("https://raw.githubusercontent.com/swolmer/nolan-s-app/main/assets/welcome_bg.png")
 
     st.markdown('<div class="glass">', unsafe_allow_html=True)
     st.title("🌄 Nolan’s Safe Space")
@@ -63,53 +63,73 @@ if not st.session_state.entered:
 
 # 🧭 Trail map screen
 else:
-    set_background("https://raw.githubusercontent.com/swolmer/nolan-s-app/main/topo_map.png")
+    set_background("https://raw.githubusercontent.com/swolmer/nolan-s-app/main/assets/topo_map.png")
 
     st.markdown('<div class="glass">', unsafe_allow_html=True)
     st.title("🗺️ Choose a Trail Marker")
     st.markdown("Each post is here to guide you. Follow the trail.")
     st.markdown('</div>', unsafe_allow_html=True)
 
-    # Trail 1
-    st.markdown("### 🪧 💪 Boost Me")
-    if st.button("Open Boost Me"):
-        st.success(get_random_affirmation())
-    st.markdown("🔘")
+    # Add spacing
+    st.markdown("### &nbsp;\n### &nbsp;")
 
-    # Trail 2
-    st.markdown("### 🪧 🏕️ Emergency Shelter")
-    if st.button("Open Emergency Shelter"):
-        st.info(get_emergency_message())
-    st.markdown("🔘")
+    # Trail Marker 1 - Left
+    col1, col2, col3 = st.columns([2, 1, 2])
+    with col1:
+        st.markdown("### 🪧 💪 Boost Me")
+        if st.button("Open Boost Me"):
+            st.success(get_random_affirmation())
 
-    # Trail 3
-    st.markdown("### 🪧 📜 Mark Wins")
-    if st.button("Open Mark Wins"):
-        st.success(get_proof_item())
-    st.markdown("🔘")
+    st.markdown("### &nbsp;")
 
-    # Trail 4
-    st.markdown("### 🪧 💌 Love Letters from Sophie")
-    if st.button("Open Love Letters"):
-        try:
-            st.write(get_random_love_note())
-        except FileNotFoundError:
-            st.warning("Sophie hasn't added letters yet!")
-    st.markdown("🔘")
+    # Trail Marker 2 - Center
+    col1, col2, col3 = st.columns([1.5, 1, 2])
+    with col2:
+        st.markdown("### 🪧 🏕️ Emergency Shelter")
+        if st.button("Open Emergency Shelter"):
+            st.info(get_emergency_message())
 
-    # Trail 5
-    st.markdown("### 🪧 📸 Our Moments")
-    if st.button("Open Our Moments"):
-        st.write("""
-        • That hike where we got lost but kept laughing  
-        • The night we stayed up talking with no lights  
-        • Your birthday surprise  
-        • The first time you said you felt safe with me  
-        • Every time you look at me like I’m home  
-        """)
-    st.markdown("🔘")
+    st.markdown("### &nbsp;")
 
-    # Trail 6
-    st.markdown("### 🪧 🚰 Water & Rest")
-    if st.button("Open Water & Rest"):
-        st.write("You don’t have to summit today, Nolan.\nTake your water, breathe deep, and rest.\nYou’re still on your path.")
+    # Trail Marker 3 - Right
+    col1, col2, col3 = st.columns([2, 1, 1])
+    with col3:
+        st.markdown("### 🪧 📜 Mark Wins")
+        if st.button("Open Mark Wins"):
+            st.success(get_proof_item())
+
+    st.markdown("### &nbsp;")
+
+    # Trail Marker 4 - Left again
+    col1, col2, col3 = st.columns([2, 1, 2])
+    with col1:
+        st.markdown("### 🪧 💌 Love Letters from Sophie")
+        if st.button("Open Love Letters"):
+            try:
+                st.write(get_random_love_note())
+            except FileNotFoundError:
+                st.warning("Sophie hasn't added letters yet!")
+
+    st.markdown("### &nbsp;")
+
+    # Trail Marker 5 - Center
+    col1, col2, col3 = st.columns([1.5, 1, 2])
+    with col2:
+        st.markdown("### 🪧 📸 Our Moments")
+        if st.button("Open Our Moments"):
+            st.write("""
+            • That hike where we got lost but kept laughing  
+            • The night we stayed up talking with no lights  
+            • Your birthday surprise  
+            • The first time you said you felt safe with me  
+            • Every time you look at me like I’m home  
+            """)
+
+    st.markdown("### &nbsp;")
+
+    # Trail Marker 6 - Right
+    col1, col2, col3 = st.columns([2, 1, 1])
+    with col3:
+        st.markdown("### 🪧 🚰 Water & Rest")
+        if st.button("Open Water & Rest"):
+            st.write("You don’t have to summit today, Nolan.\nTake your water, breathe deep, and rest.\nYou’re still on your path.")
