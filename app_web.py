@@ -43,26 +43,11 @@ def set_background(image_url):
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 6rem;  /* More vertical spacing between markers */
+            gap: 6rem;
             margin-top: 2rem;
             margin-bottom: 3rem;
         }}
 
-        /* Vertical dotted trail line */
-        /* .trail-grid::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 4px;
-            background-image: linear-gradient(to bottom, #8B5C2A 40%, rgba(0,0,0,0) 0%);
-            background-position: right;
-            background-size: 1px 14px;
-            background-repeat: repeat-y;
-            z-index: 0;
-        } */
-
-        /* Marker box */
         .marker {{
             background: rgba(255,255,255,0.85);
             border-radius: 12px;
@@ -86,17 +71,17 @@ def set_background(image_url):
             transform: scale(1.05);
         }}
 
-        .marker-wrapper {
+        .marker-wrapper {{
             position: relative;
-        }
+        }}
 
-        .marker-wrapper:not(:last-child)::after {
+        .marker-wrapper:not(:last-child)::after {{
             content: "";
             position: absolute;
             left: 50%;
             top: 100%;
             width: 4px;
-            height: 60px; /* match your offset */
+            height: 60px;
             background: repeating-linear-gradient(
                 to bottom,
                 #8B5C2A,
@@ -104,26 +89,22 @@ def set_background(image_url):
                 transparent 8px,
                 transparent 16px
             );
-            transform: translateX(-50%) rotate(
-                /* Diagonal direction based on odd/even */
-                20deg
-            );
+            transform: translateX(-50%) rotate(20deg);
             z-index: 0;
-        }
+        }}
 
-        .marker-wrapper:nth-child(even):not(:last-child)::after {
+        .marker-wrapper:nth-child(even):not(:last-child)::after {{
             transform: translateX(-50%) rotate(-20deg);
-        }
+        }}
 
-        .marker-wrapper:nth-child(odd) {
+        .marker-wrapper:nth-child(odd) {{
             transform: translateX(-120px);
-        }
+        }}
 
-        .marker-wrapper:nth-child(even) {
+        .marker-wrapper:nth-child(even) {{
             transform: translateX(120px);
-        }
+        }}
 
-        /* Icon inside marker */
         .marker img {{
             width: 36px !important;
             margin-bottom: 0.25rem;
@@ -253,50 +234,50 @@ else:
 • Every time you look at me like I’m home  """, "Open Our Moments"),
         ("Water & Rest", lambda: """You don’t have to summit today, Nolan.  
 Take your water, breathe deep, and rest.  
-You’re still on your path.""", "Open Water & Rest")
+You’re still on your path.""", "Open Water & Rest")er & Rest")
     ]
 
-    # Title
+    # Title Title
     st.markdown(
-        '<div class="trail-title">🗺️ Choose a Trail Marker — I’m With You Every Step</div>',
-        unsafe_allow_html=True
+        '<div class="trail-title">🗺️ Choose a Trail Marker — I’m With You Every Step</div>',        '<div class="trail-title">🗺️ Choose a Trail Marker — I’m With You Every Step</div>',
+        unsafe_allow_html=TrueTrue
     )
 
     # Instructions
     st.markdown(
         """
         <div class="trail-instructions">
-            Follow the path. Each stop is here to guide you.
+            Follow the path. Each stop is here to guide you. guide you.
         </div>
         """,
         unsafe_allow_html=True
     )
 
     # Start vertical trail container
-    st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
+    st.markdown('<div class="trail-grid">', unsafe_allow_html=True)t.markdown('<div class="trail-grid">', unsafe_allow_html=True)
 
-    for idx, (label, content_func, btn_label) in enumerate(markers):
-        st.markdown(
+    for idx, (label, content_func, btn_label) in enumerate(markers):, (label, content_func, btn_label) in enumerate(markers):
+        st.markdown(own(
             f"""
-            <div class="marker-wrapper">
-                <div class="marker">
-                    <img src="{WOOD_POST}" class="marker-icon" />
-                    <div class="trail-label">{label}</div>
-                </div>
-            </div>
+            <div class="marker-wrapper">-wrapper">
+                <div class="marker">           <div class="marker">
+                    <img src="{WOOD_POST}" class="marker-icon" />                    <img src="{WOOD_POST}" class="marker-icon" />
+                    <div class="trail-label">{label}</div>  <div class="trail-label">{label}</div>
+                </div></div>
+            </div> </div>
             """,
             unsafe_allow_html=True
         )
 
-        if st.button(btn_label, key=btn_label):
-            try:
-                result = content_func()
-                if isinstance(result, str):
+        if st.button(btn_label, key=btn_label):, key=btn_label):
+            try:       try:
+                result = content_func()                result = content_func()
+                if isinstance(result, str):, str):
                     st.success(result)
-                else:
+                else:                else:
                     st.write(result)
-            except FileNotFoundError:
-                st.warning("Sophie hasn't added letters yet!")
+            except FileNotFoundError:ileNotFoundError:
+                st.warning("Sophie hasn't added letters yet!")st.warning("Sophie hasn't added letters yet!")
 
 
         # Close container
@@ -305,8 +286,8 @@ You’re still on your path.""", "Open Water & Rest")
     # Footer
     st.markdown(
         """
-        <div class="footer">
-            🌲 Tap a marker to view its message — then explore the whole trail!
+        <div class="footer">div class="footer">
+            🌲 Tap a marker to view its message — then explore the whole trail!            🌲 Tap a marker to view its message — then explore the whole trail!
         </div>
         """,
         unsafe_allow_html=True
