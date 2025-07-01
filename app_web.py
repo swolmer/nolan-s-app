@@ -73,6 +73,7 @@ def set_background(image_url):
 
         .marker-wrapper {{
             position: relative;
+            margin-bottom: 2rem;
         }}
 
         .marker-wrapper:not(:last-child)::after {{
@@ -81,7 +82,7 @@ def set_background(image_url):
             left: 50%;
             top: 100%;
             width: 4px;
-            height: 60px;
+            height: 120px;
             background: repeating-linear-gradient(
                 to bottom,
                 #8B5C2A,
@@ -98,11 +99,11 @@ def set_background(image_url):
         }}
 
         .marker-wrapper:nth-child(odd) {{
-            transform: translateX(-120px);
+            transform: translateX(-200px);
         }}
 
         .marker-wrapper:nth-child(even) {{
-            transform: translateX(120px);
+            transform: translateX(200px);
         }}
 
         .marker img {{
