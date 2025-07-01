@@ -44,9 +44,12 @@ def set_background(image_url):
         .trail-grid {{
             position: relative;
             width: 100%;
-            min-height: 500px;
-            height: 70vh;
-            margin-top: 0rem;  # or 0 for no space at all
+            margin-top: 0;  /* Remove space between title and markers */
+            margin-bottom: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6rem;  /* Add spacing between markers */
         }}
 
         .marker-wrapper {{
@@ -217,7 +220,7 @@ else:
 Take your water, breathe deep, and rest.  
 You’re still on your path.""", "Open Water & Rester & Rest")
     ]
-        
+            
     # Title & Instructions
     st.markdown(
         '<div class="trail-title">🗺️ Choose a Trail Marker — I’m With You Every Step</div>',
@@ -232,10 +235,27 @@ You’re still on your path.""", "Open Water & Rester & Rest")
         unsafe_allow_html=True
     )
 
-    # Open the trail container
-    st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
+    # Open trail container with spacing
+    st.markdown(
+        """
+        <style>
+        .trail-grid {
+            position: relative;
+            width: 100%;
+            margin-top: 0;
+            margin-bottom: 3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6rem;
+        }
+        </style>
+        <div class="trail-grid">
+        """,
+        unsafe_allow_html=True
+    )
 
-    # Vertical trail layout (simple and clean)
+    # Render each trail marker
     for idx, (label, content_func, btn_label) in enumerate(markers):
         st.markdown(
             f"""
