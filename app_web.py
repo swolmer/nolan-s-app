@@ -193,7 +193,7 @@ if not st.session_state.entered:
 else:
     set_background(TRAIL_BG)
 
-    # Trail Title
+       # Trail title
     st.markdown(
         '<div class="trail-title">🗺️ Choose a Trail Marker — I’m With You Every Step</div>',
         unsafe_allow_html=True
@@ -208,6 +208,43 @@ else:
         """,
         unsafe_allow_html=True
     )
+
+    # Begin the vertical trail container
+    st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
+
+    for idx, (label, content_func, btn_label) in enumerate(markers):
+        st.markdown(
+            f"""
+            <div class="marker marker-{idx}">
+                <img src="{WOOD_POST}" class="marker-icon" />
+                <div class="trail-label">{label}</div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+        if st.button(btn_label, key=btn_label):
+            try:
+                result = content_func()
+                if isinstance(result, str):
+                    st.success(result)
+                else:
+                    st.write(result)
+            except FileNotFoundError:
+                st.warning("Sophie hasn't added letters yet!")
+
+        st.markdown('</div>', unsafe_allow_html=True)
+
+        # Footer
+        st.markdown(
+            """
+            <div class="footer">
+                🌲 Tap a marker to view its message — then explore the whole trail!
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
 
     # Define trail markers
     markers = [
