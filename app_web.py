@@ -227,30 +227,29 @@ You’re still on your path.""", "Open Water & Rester & Rest")
     step_y = 130
 
     for idx, (label, content_func, btn_label) in enumerate(markers):
-        left = 120 + idx * step_x
-        top = idx * step_y
+    left = 120 + idx * step_x
+    top = idx * step_y
 
-        st.markdown(
-            f"""
-            <div class="marker-wrapper" style="left:{left}px; top:{top}px;">
-                <div class="marker">
-                    <img src="{WOOD_POST}" class="marker-icon" />
-                    <div class="trail-label">{label}</div>
-                    <form action="" method="post">
-                        <button type="submit" name="{btn_label}">{btn_label}</button>
-                    </form>
-                </div>
+    # Render both marker and st.button together inside one .marker-wrapper div
+    st.markdown(
+        f"""
+        <div class="marker-wrapper" style="left:{left}px; top:{top}px;">
+            <div class="marker">
+                <img src="{WOOD_POST}" class="marker-icon" />
+                <div class="trail-label">{label}</div>
             </div>
-            """,
-            unsafe_allow_html=True
-        )
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
-        if st.button(btn_label, key=f"btn-{idx}"):
-            try:
-                result = content_func()
-                st.success(result if isinstance(result, str) else str(result))
-            except FileNotFoundError:
-                st.warning("Sophie hasn't added letters yet!")
+    # Render only ONE button (no HTML form)
+    if st.button(btn_label, key=f"btn-{idx}"):
+        try:
+            result = content_func()
+            st.success(result if isinstance(result, str) else str(result))
+        except FileNotFoundError:
+            st.warning("Sophie hasn't added letters yet!")
 
     # Close container
     st.markdown('</div>', unsafe_allow_html=True)
