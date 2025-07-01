@@ -41,7 +41,7 @@ def set_background(image_url):
         .trail-grid {{
             position: relative;
             width: 100%;
-            height: 700px;
+            height: 80px;
             margin-top: 0rem;
         }}
         .marker-wrapper {{
@@ -230,27 +230,26 @@ You’re still on your path.""", "Open Water & Rester & Rest")
         left = 120 + idx * step_x
         top = idx * step_y
 
-        st.markdown(
-            f"""
-            <div class="marker-wrapper" style="left:{left}px; top:{top}px;">
-                <div class="marker">
-                    <img src="{WOOD_POST}" class="marker-icon" />
-                    <div class="trail-label">{label}</div>
-                    <div style="margin-top: 0.5rem;">
-                        <button name="{btn_label}" style="background-color:#8B5C2A;color:white;border:none;padding:6px 10px;border-radius:6px;font-weight:600;cursor:pointer;">{btn_label}</button>
+        # Streamlit layout: render marker + real button inside one container
+        with st.container():
+            st.markdown(
+                f"""
+                <div class="marker-wrapper" style="left:{left}px; top:{top}px;">
+                    <div class="marker">
+                        <img src="{WOOD_POST}" class="marker-icon" />
+                        <div class="trail-label">{label}</div>
                     </div>
                 </div>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+                """,
+                unsafe_allow_html=True
+            )
 
-        if st.button(btn_label, key=f"btn-{idx}"):
-            try:
-                result = content_func()
-                st.success(result if isinstance(result, str) else str(result))
-            except FileNotFoundError:
-                st.warning("Sophie hasn't added letters yet!")
+            if st.button(btn_label, key=f"btn-{idx}"):
+                try:
+                    result = content_func()
+                    st.success(result if isinstance(result, str) else str(result))
+                except FileNotFoundError:
+                    st.warning("Sophie hasn't added letters yet!")
 
     # Close container
     st.markdown('</div>', unsafe_allow_html=True)
