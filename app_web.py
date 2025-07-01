@@ -44,7 +44,7 @@ def set_background(image_url):
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 7rem;  /* Spread markers more */
+            gap: 7rem;
             margin-top: 2rem;
             margin-bottom: 3rem;
         }}
@@ -55,10 +55,20 @@ def set_background(image_url):
             bottom: 0;
             width: 4px;
             background-image: linear-gradient(to bottom, #8B5C2A 40%, rgba(0,0,0,0) 0%);
-            background-position: right;
+            background-position: center;
             background-size: 1px 14px;
             background-repeat: repeat-y;
             z-index: 0;
+        }}
+        .marker-wrapper {{
+            position: relative;
+            z-index: 2;
+        }}
+        .marker-wrapper:nth-child(odd) {{
+            transform: translateX(-120px);
+        }}
+        .marker-wrapper:nth-child(even) {{
+            transform: translateX(120px);
         }}
         .marker {{
             background: rgba(255,255,255,0.85);
@@ -68,7 +78,6 @@ def set_background(image_url):
             text-align: center;
             user-select: none;
             box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-            position: relative;
             backdrop-filter: blur(10px);
             z-index: 1;
             opacity: 0;
@@ -78,25 +87,16 @@ def set_background(image_url):
         .marker:hover {{
             transform: scale(1.05);
         }}
-        .marker:nth-child(odd) {{
-            transform: translateX(-120px);
-        }}
-        .marker:nth-child(even) {{
-            transform: translateX(120px);
-        }}
-
         .marker-icon {{
             width: 60px !important;
             margin-bottom: 0.25rem;
         }}
-
         .trail-label {{
             font-size: 0.75rem;
             font-weight: 600;
             color: #4B321D;
             margin-top: 0.3rem;
         }}
-
         .trail-instructions {{
             font-size: 1.1rem;
             font-weight: 500;
@@ -108,13 +108,12 @@ def set_background(image_url):
             text-align: center;
             box-shadow: 0 2px 6px rgba(0,0,0,0.08);
         }}
-
         .marker button,
         .marker button span,
         .stButton>button,
         .stButton>button span {{
             font-family: 'Inter', sans-serif !important;
-            font-size: 0.8125rem !important;  /* ≈13px */
+            font-size: 0.8125rem !important;
             line-height: 1.1rem !important;
             padding: 0.3rem 0.6rem !important;
             background-color: #8B5C2A !important;
@@ -126,14 +125,12 @@ def set_background(image_url):
             box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
             text-transform: none !important;
         }}
-
         .marker button:hover,
         .stButton>button:hover {{
             background-color: #A06A36 !important;
             border-color: #6A4724 !important;
             transform: scale(0.97);
         }}
-
         @keyframes fadeIn {{
             from {{ opacity: 0; transform: translateY(20px); }}
             to {{ opacity: 1; transform: translateY(0); }}
@@ -161,6 +158,7 @@ def set_background(image_url):
         """,
         unsafe_allow_html=True,
     )
+
 
 # Session state to track if the user has "entered" the space
 if "entered" not in st.session_state:
@@ -229,18 +227,19 @@ You’re still on your path.""", "Open Water & Rest")
     st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
 
     for idx, (label, content_func, btn_label) in enumerate(markers):
-        # Marker box with diagonal layout
         st.markdown(
             f"""
-            <div class="marker">
-                <img src="{WOOD_POST}" class="marker-icon" />
-                <div class="trail-label">{label}</div>
+            <div class="marker-wrapper">
+                <div class="marker">
+                    <img src="{WOOD_POST}" class="marker-icon" />
+                    <div class="trail-label">{label}</div>
+                </div>
             </div>
             """,
             unsafe_allow_html=True
         )
 
-        # Button
+        # ✅ This must be inside the loop
         if st.button(btn_label, key=btn_label):
             try:
                 result = content_func()
@@ -251,7 +250,8 @@ You’re still on your path.""", "Open Water & Rest")
             except FileNotFoundError:
                 st.warning("Sophie hasn't added letters yet!")
 
-    # Close container
+
+        # Close container
     st.markdown('</div>', unsafe_allow_html=True)
 
     # Footer
