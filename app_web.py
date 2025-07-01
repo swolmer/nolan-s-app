@@ -49,7 +49,7 @@ def set_background(image_url):
         }}
 
         /* Vertical dotted trail line */
-        .trail-grid::before {{
+        .trail-grid::before {
             content: "";
             position: absolute;
             top: 0;
@@ -60,7 +60,7 @@ def set_background(image_url):
             background-size: 1px 14px;
             background-repeat: repeat-y;
             z-index: 0;
-        }}
+        }
 
         /* Marker box */
         .marker {{
@@ -86,13 +86,42 @@ def set_background(image_url):
             transform: scale(1.05);
         }}
 
-        .marker:nth-child(odd) {{
-            transform: translateX(-120px);
-        }}
+        .marker-wrapper {
+            position: relative;
+        }
 
-        .marker:nth-child(even) {{
+        .marker-wrapper:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 100%;
+            width: 4px;
+            height: 60px; /* match your offset */
+            background: repeating-linear-gradient(
+                to bottom,
+                #8B5C2A,
+                #8B5C2A 8px,
+                transparent 8px,
+                transparent 16px
+            );
+            transform: translateX(-50%) rotate(
+                /* Diagonal direction based on odd/even */
+                20deg
+            );
+            z-index: 0;
+        }
+
+        .marker-wrapper:nth-child(even):not(:last-child)::after {
+            transform: translateX(-50%) rotate(-20deg);
+        }
+
+        .marker-wrapper:nth-child(odd) {
+            transform: translateX(-120px);
+        }
+
+        .marker-wrapper:nth-child(even) {
             transform: translateX(120px);
-        }}
+        }
 
         /* Icon inside marker */
         .marker img {{
