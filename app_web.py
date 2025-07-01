@@ -44,7 +44,7 @@ def set_background(image_url):
         .trail-grid {{
             position: relative;
             width: 100%;
-            height: 700px;
+            height: 70px;
             margin-top: 0rem;
         }}
 
