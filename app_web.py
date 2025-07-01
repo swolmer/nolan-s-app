@@ -42,38 +42,19 @@ def set_background(image_url):
         }}
 
         .trail-grid {{
-            position: relative;
-            width: 100%;
-            margin-top: 0;  /* Remove space between title and markers */
-            margin-bottom: 3rem;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 6rem;  /* Add spacing between markers */
+            gap: 2.5rem;
+            margin-top: 0;  # Remove extra space above markers
+            margin-bottom: 2rem;
+            width: 100%;
         }}
 
         .marker-wrapper {{
-            position: absolute;
+            position: static;
             margin: 0;
-            transition: transform 0.3s;
-        }}
-
-        .marker-wrapper:not(:last-child)::after {{
-            content: "";
-            position: absolute;
-            left: 50%;
-            top: 10%;
-            width: 4px;
-            height: 60px;
-            background: repeating-linear-gradient(
-                to bottom,
-                #8B5C2A,
-                #8B5C2A 8px,
-                transparent 8px,
-                transparent 16px
-            );
-            transform: translateX(-50%) rotate(45deg);
-            z-index: 0;
+            width: auto;
         }}
 
         .marker {{
@@ -143,45 +124,64 @@ def set_background(image_url):
             border-color: #6A4724 !important;
             transform: scale(0.97);
         }}
-
-        @keyframes fadeIn {{
-            from {{ opacity: 0; transform: translateY(20px); }}
-            to {{ opacity: 1; transform: translateY(0); }}
+            font-size: 0.8125rem !important;
+            line-height: 1.1rem !important;
+            padding: 0.3rem 0.6rem !important;nslateY(20px); }}
+            background-color: #8B5C2A !important;eY(0); }}
+            color: white !important;
+            border: 2px solid #5A3E1B !important;
+            border-radius: 6px !important;
+            font-weight: 600 !important;
+            margin-top: 0.3rem !important;
+            box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+            text-transform: none !important;
         }}
 
+        .marker button:hover,
+        .stButton>button:hover {{
+            background-color: #A06A36 !important;
+            border-color: #6A4724 !important;
+            transform: scale(0.97);
+        }}  margin-bottom: 0.5rem;
+            color: #222;
+        @keyframes fadeIn {{(255, 255, 255, 0.85);
+            from {{ opacity: 0; transform: translateY(20px); }}
+            to {{ opacity: 1; transform: translateY(0); }}
+        }}  display: inline-block;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
         .footer {{
             text-align: center;
             color: #555;
-            margin-top: 2rem;
+            margin-top: 2rem;e,
             font-size: 0.75rem;
         }}
-
-        .trail-title {{
-            font-size: 2.2rem;
+# Session state to track if the user has "entered" the space
+        .trail-title {{session_state:
+            font-size: 2.2rem; False
             font-weight: 700;
-            text-align: center;
+            text-align: center;:
             margin-top: 2.5rem;
             margin-bottom: 0.5rem;
             color: #222;
             background: rgba(255, 255, 255, 0.85);
             border-radius: 12px;
-            padding: 0.5rem 1.5rem;
+            padding: 0.5rem 1.5rem;ce</h1>
             display: inline-block;
             box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-        }}
-        </style>
-        """,
+        }}  Take a moment to breathe.<br><br>
+        </style>ie made this for you — for the tough moments.<br>
+        """,Because she loves you and wants to be here, even when she can't be.<br><br>
         unsafe_allow_html=True,
-    )
-
+    )       You are so much more than you can see right now.<br>
+            You are so loved.
 # Session state to track if the user has "entered" the space
 if "entered" not in st.session_state:
     st.session_state.entered = False
-
+        unsafe_allow_html=True
 if not st.session_state.entered:
     set_background(WELCOME_BG)
-
-    st.markdown(
+    if st.button("🧭 Enter Your Trail"):
+    st.markdown(on_state.entered = True
         '''
         <div class="glass">
             <h1>🌄 Nolan’s Safe Space</h1>
@@ -190,22 +190,22 @@ if not st.session_state.entered:
             Take a moment to breathe.<br><br>
             Sophie made this for you — for the tough moments.<br>
             Because she loves you and wants to be here, even when she can't be.<br><br>
-            You are enough.<br>
-            You are so much more than you can see right now.<br>
-            You are so loved.
-            </p>
-        </div>
-        ''',
-        unsafe_allow_html=True
-    )
-
-    if st.button("🧭 Enter Your Trail"):
+            You are enough.<br>_item, "Open Mark Wins"),
+            You are so much more than you can see right now.<br> Love Letters"),
+            You are so loved.a: """• That hike where we got lost but kept laughing  
+            </p>tayed up talking with no lights  
+        </div>y surprise  
+        ''',time you said you felt safe with me  
+        unsafe_allow_html=Trueke I’m home  """, "Open Our Moments"),
+    )   ("Water & Rest", lambda: """You don’t have to summit today, Nolan.  
+Take your water, breathe deep, and rest.  
+    if st.button("🧭 Enter Your Trail"):er & Rester & Rest")
         st.session_state.entered = True
-
-else:
+            
+else: Title & Instructions
     set_background(TRAIL_BG)
-
-    # Define trail markers
+        '<div class="trail-title">🗺️ Choose a Trail Marker — I’m With You Every Step</div>',
+    # Define trail markersTrue
     markers = [
         ("Boost Me", get_random_affirmation, "Open Boost Me"),
         ("Emergency Shelter", get_emergency_message, "Open Emergency Shelter"),
@@ -213,71 +213,49 @@ else:
         ("Love Letters from Sophie", get_random_love_note, "Open Love Letters"),
         ("Our Moments", lambda: """• That hike where we got lost but kept laughing  
 • The night we stayed up talking with no lights  
-• Your birthday surprise  
+• Your birthday surprise  True
 • The first time you said you felt safe with me  
 • Every time you look at me like I’m home  """, "Open Our Moments"),
         ("Water & Rest", lambda: """You don’t have to summit today, Nolan.  
 Take your water, breathe deep, and rest.  
 You’re still on your path.""", "Open Water & Rester & Rest")
-    ]
-            
-    # Title & Instructions
-    st.markdown(
+    ]   <style>
+            il-grid {
+    # Title & Instructionstive;
+    st.markdown(h: 100%;
         '<div class="trail-title">🗺️ Choose a Trail Marker — I’m With You Every Step</div>',
-        unsafe_allow_html=True
-    )
-    st.markdown(
-        """
+        unsafe_allow_html=Truem;
+    )       display: flex;
+    st.markdown(-direction: column;
+        """ align-items: center;
         <div class="trail-instructions">
             Follow the path. Each stop is here to guide you.
-        </div>
-        """,
+        </div>e>
+        """, class="trail-grid">
         unsafe_allow_html=True
+    )   unsafe_allow_html=True
     )
+    # Open trail container
+    st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
 
-    # Open trail container with spacing
+for idx, (label, content_func, btn_label) in enumerate(markers):
     st.markdown(
-        """
-        <style>
-        .trail-grid {
-            position: relative;
-            width: 100%;
-            margin-top: 0;
-            margin-bottom: 3rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6rem;
-        }
-        </style>
-        <div class="trail-grid">
+        f"""
+        <div class="marker-wrapper">
+            <div class="marker">
+                <img src="{WOOD_POST}" class="marker-icon" />
+                <div class="trail-label">{label}</div>
         """,
         unsafe_allow_html=True
     )
-
-    # Render each trail marker
-    for idx, (label, content_func, btn_label) in enumerate(markers):
-        st.markdown(
-            f"""
-            <div class="marker-wrapper">
-                <div class="marker">
-                    <img src="{WOOD_POST}" class="marker-icon" />
-                    <div class="trail-label">{label}</div>
-                    <form action="" method="post">
-                        <button type="submit" name="{btn_label}">{btn_label}</button>
-                    </form>
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-
+    # Button inside the marker card
+        ).button(btn_label, key=f"btn-{idx}"):
+        # Button directly below label, inside the marker cardue
         if st.button(btn_label, key=f"btn-{idx}"):
-            try:
-                result = content_func()
-                st.success(result if isinstance(result, str) else str(result))
-            except FileNotFoundError:
-                st.warning("Sophie hasn't added letters yet!")
-
-    # Close trail container
-    st.markdown('</div>', unsafe_allow_html=True)
+            try:uccess(result if isinstance(result, str) else str(result))
+                result = content_func()   if st.button(btn_label, key=f"btn-{idx}"):
+                st.success(result if isinstance(result, str) else str(result))            try:
+            except FileNotFoundError:nt_func()tml=True)
+                st.warning("Sophie hasn't added letters yet!")r(result))
+ileNotFoundError:v>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)st.warning("Sophie hasn't added letters yet!")
