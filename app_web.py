@@ -37,52 +37,66 @@ def set_background(image_url):
             backdrop-filter: blur(16px);
         }}
         .trail-grid {{
-            display: grid;
-            grid-auto-flow: column;
-            grid-auto-rows: 1fr;
-            gap: 3.5rem; /* Increase gap for more space */
-            justify-content: center;
-            align-items: start;
-            margin-top: 5rem;
-            margin-bottom: 4rem;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4.5rem;
+            margin-top: 2rem;
+            margin-bottom: 3rem;
+        }}
+        .trail-grid::before {{
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-image: linear-gradient(to bottom, #8B5C2A 40%, rgba(0,0,0,0) 0%);
+            background-position: right;
+            background-size: 1px 14px;
+            background-repeat: repeat-y;
+            z-index: 0;
         }}
         .marker {{
             background: rgba(255,255,255,0.85);
             border-radius: 12px;
-            padding: 0.7rem 0.7rem;
-            width: 110px;
+            padding: 0.6rem 0.6rem;
+            width: 130px;
             cursor: pointer;
             text-align: center;
             user-select: none;
             box-shadow: 0 2px 12px rgba(0,0,0,0.08);
             position: relative;
-            /* Glass effect */
-            backdrop-filter: blur(12px);
-            /* Smaller font */
-            font-size: 0.68rem;   /* Smaller font for marker text */
+            font-size: 0.85rem;
+            line-height: 1.3rem;
+            backdrop-filter: blur(10px);
+            z-index: 1;
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+            transition: transform 0.3s ease;
+        }}
+        .marker:hover {{
+            transform: scale(1.05);
         }}
         .marker img {{
-            width: 38px !important; /* Smaller icon */
-            margin-bottom: 0.3rem;
+            width: 36px !important;
+            margin-bottom: 0.25rem;
         }}
-        /* Diagonal effect: stagger each marker */
-        .marker:nth-child(2n-1) {{ transform: translateY(0rem); }}
-        .marker:nth-child(2) {{ transform: translateY(2rem); }}
-        .marker:nth-child(3) {{ transform: translateY(4rem); }}
-        .marker:nth-child(4) {{ transform: translateY(6rem); }}
-        .marker:nth-child(5) {{ transform: translateY(8rem); }}
-        .marker:nth-child(6) {{ transform: translateY(10rem); }}
-        .dotted-line {{
-            border-left: 3px dotted #8B5C2A;
-            height: 80px;
-            margin: 0 auto;
-            width: 0;
+        .marker:nth-child(odd) {{
+            transform: translateX(-120px);
+        }}
+        .marker:nth-child(even) {{
+            transform: translateX(120px);
+        }}
+        @keyframes fadeIn {{
+            from {{ opacity: 0; transform: translateY(20px); }}
+            to {{ opacity: 1; transform: translateY(0); }}
         }}
         .footer {{
             text-align: center;
             color: #555;
             margin-top: 2rem;
-            font-size: 0.75rem; /* Smaller font, about 12px */
+            font-size: 0.75rem;
         }}
         .trail-title {{
             font-size: 2.2rem;
@@ -101,6 +115,7 @@ def set_background(image_url):
         """,
         unsafe_allow_html=True,
     )
+
 
 if "entered" not in st.session_state:
     st.session_state.entered = False
