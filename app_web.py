@@ -91,6 +91,22 @@ def set_background(image_url):
         .marker:nth-child(even) {{
             transform: translateX(120px);
         }}
+        .marker button {{
+            font-size: 0.65rem !important;
+            padding: 0.3rem 0.6rem !important;
+            background-color: #8B5C2A !important;
+            color: white !important;
+            border: 2px solid #5A3E1B !important;
+            border-radius: 6px !important;
+            font-weight: 600 !important;
+            margin-top: 0.3rem !important;
+            box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }}
+        .marker button:hover {{
+            background-color: #A06A36 !important;
+            border-color: #6A4724 !important;
+            transform: scale(0.97);
+        }}
         @keyframes fadeIn {{
             from {{ opacity: 0; transform: translateY(20px); }}
             to {{ opacity: 1; transform: translateY(0); }}
