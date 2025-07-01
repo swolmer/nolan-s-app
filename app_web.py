@@ -184,7 +184,7 @@ You’re still on your path.""", "Open Water & Rester & Rest"),
     # Diagonal spacing
     step_x = 100
     step_y = 85
-
+        
     for idx, (label, content_func, btn_label) in enumerate(markers):
         left = 50 + idx * step_x
         top = 30 + idx * step_y
@@ -196,26 +196,11 @@ You’re still on your path.""", "Open Water & Rester & Rest"),
                 <div class="marker">
                     <img src="{WOOD_POST}" class="marker-icon" />
                     <div class="trail-label">{label}</div>
-                    <form action="" method="post">
-                        <button type="submit" name="submit-{idx}" style="
-                            font-size: 0.8125rem;
-                            padding: 0.3rem 0.6rem;
-                            background-color: #8B5C2A;
-                            color: white;
-                            border: 2px solid #5A3E1B;
-                            border-radius: 6px;
-                            font-weight: 600;
-                            margin-top: 0.5rem;
-                            cursor: pointer;
-                        ">{btn_label}</button>
-                    </form>
-                </div>
-            </div>
             """,
             unsafe_allow_html=True
         )
 
-        # Respond to button press
+        # Button INSIDE the marker block (Streamlit-native)
         if st.button(btn_label, key=f"btn-{idx}", help=f"Click to open: {label}"):
             try:
                 result = content_func()
@@ -223,15 +208,5 @@ You’re still on your path.""", "Open Water & Rester & Rest"),
             except FileNotFoundError:
                 st.warning("Sophie hasn't added letters yet!")
 
-    # Close the grid container
-    st.markdown('</div>', unsafe_allow_html=True)
-
-    # Footer
-    st.markdown(
-        """
-        <div class="footer">
-            🌲 Tap a marker to view its message — then explore the whole trail!
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+        # Close HTML block
+        st.markdown("</div></div>", unsafe_allow_html=True)
