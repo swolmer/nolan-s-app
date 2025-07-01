@@ -12,7 +12,6 @@ st.set_page_config(page_title="Nolan’s Safe Space", page_icon="🌲", layout="
 WELCOME_BG = "https://raw.githubusercontent.com/swolmer/nolan-s-app/main/assets/welcome_bg.png"
 TRAIL_BG = "https://raw.githubusercontent.com/swolmer/nolan-s-app/main/assets/grand_teton_map.png"
 WOOD_POST = "https://raw.githubusercontent.com/swolmer/nolan-s-app/main/assets/wood_post.png"
-
 def set_background(image_url):
     st.markdown(
         f"""
@@ -40,13 +39,16 @@ def set_background(image_url):
             backdrop-filter: blur(16px);
         }}
         .trail-grid {{
+            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0;  /* handled manually with offset */
+            gap: 4.5rem;  /* More vertical spacing between markers */
             margin-top: 2rem;
             margin-bottom: 3rem;
         }}
+
+        /* Vertical dotted trail line */
         .trail-grid::before {{
             content: "";
             position: absolute;
@@ -54,48 +56,62 @@ def set_background(image_url):
             bottom: 0;
             width: 4px;
             background-image: linear-gradient(to bottom, #8B5C2A 40%, rgba(0,0,0,0) 0%);
-            background-position: center;
+            background-position: right;
             background-size: 1px 14px;
             background-repeat: repeat-y;
             z-index: 0;
         }}
-        .marker-wrapper {{
-            position: relative;
-            z-index: 2;
-        }}
-        .marker-wrapper:nth-child(odd) {{
-            transform: translateX(-120px);
-        }}
-        .marker-wrapper:nth-child(even) {{
-            transform: translateX(120px);
-        }}
+
+        /* Marker box */
         .marker {{
             background: rgba(255,255,255,0.85);
             border-radius: 12px;
             padding: 0.6rem 0.6rem;
             width: 130px;
+            cursor: pointer;
             text-align: center;
             user-select: none;
             box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            position: relative;
+            font-size: 0.85rem;
+            line-height: 1.3rem;
             backdrop-filter: blur(10px);
             z-index: 1;
             opacity: 0;
             animation: fadeIn 0.8s ease forwards;
             transition: transform 0.3s ease;
         }}
+
         .marker:hover {{
             transform: scale(1.05);
         }}
+
+        .marker:nth-child(odd) {{
+            transform: translateX(-120px);
+        }}
+
+        .marker:nth-child(even) {{
+            transform: translateX(120px);
+        }}
+
+        /* Icon inside marker */
+        .marker img {{
+            width: 36px !important;
+            margin-bottom: 0.25rem;
+        }}
+
         .marker-icon {{
             width: 60px !important;
             margin-bottom: 0.25rem;
         }}
+
         .trail-label {{
             font-size: 0.75rem;
             font-weight: 600;
             color: #4B321D;
             margin-top: 0.3rem;
         }}
+
         .trail-instructions {{
             font-size: 1.1rem;
             font-weight: 500;
@@ -107,6 +123,7 @@ def set_background(image_url):
             text-align: center;
             box-shadow: 0 2px 6px rgba(0,0,0,0.08);
         }}
+
         .marker button,
         .marker button span,
         .stButton>button,
@@ -124,22 +141,26 @@ def set_background(image_url):
             box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
             text-transform: none !important;
         }}
+
         .marker button:hover,
         .stButton>button:hover {{
             background-color: #A06A36 !important;
             border-color: #6A4724 !important;
             transform: scale(0.97);
         }}
+
         @keyframes fadeIn {{
             from {{ opacity: 0; transform: translateY(20px); }}
             to {{ opacity: 1; transform: translateY(0); }}
         }}
+
         .footer {{
             text-align: center;
             color: #555;
             margin-top: 2rem;
             font-size: 0.75rem;
         }}
+
         .trail-title {{
             font-size: 2.2rem;
             font-weight: 700;
