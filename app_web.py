@@ -193,59 +193,6 @@ if not st.session_state.entered:
 else:
     set_background(TRAIL_BG)
 
-       # Trail title
-    st.markdown(
-        '<div class="trail-title">🗺️ Choose a Trail Marker — I’m With You Every Step</div>',
-        unsafe_allow_html=True
-    )
-
-    # Instructions
-    st.markdown(
-        """
-        <div class="trail-instructions">
-            Follow the path. Each stop is here to guide you.
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-    # Begin the vertical trail container
-    st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
-
-    for idx, (label, content_func, btn_label) in enumerate(markers):
-        st.markdown(
-            f"""
-            <div class="marker marker-{idx}">
-                <img src="{WOOD_POST}" class="marker-icon" />
-                <div class="trail-label">{label}</div>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-
-        if st.button(btn_label, key=btn_label):
-            try:
-                result = content_func()
-                if isinstance(result, str):
-                    st.success(result)
-                else:
-                    st.write(result)
-            except FileNotFoundError:
-                st.warning("Sophie hasn't added letters yet!")
-
-        st.markdown('</div>', unsafe_allow_html=True)
-
-        # Footer
-        st.markdown(
-            """
-            <div class="footer">
-                🌲 Tap a marker to view its message — then explore the whole trail!
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-
-
     # Define trail markers
     markers = [
         ("Boost Me", get_random_affirmation, "Open Boost Me"),
@@ -262,14 +209,27 @@ Take your water, breathe deep, and rest.
 You’re still on your path.""", "Open Water & Rest")
     ]
 
-    # Start the vertical trail grid
+    # Title
+    st.markdown(
+        '<div class="trail-title">🗺️ Choose a Trail Marker — I’m With You Every Step</div>',
+        unsafe_allow_html=True
+    )
+
+    # Instructions
+    st.markdown(
+        """
+        <div class="trail-instructions">
+            Follow the path. Each stop is here to guide you.
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # Start vertical trail container
     st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
 
     for idx, (label, content_func, btn_label) in enumerate(markers):
-        # Add vertical spacing for staggered diagonal look
-        st.markdown(f"<div style='margin-top: {idx * 2.2}rem'></div>", unsafe_allow_html=True)
-
-        # Marker post and label
+        # Marker box with diagonal layout
         st.markdown(
             f"""
             <div class="marker">
@@ -280,7 +240,7 @@ You’re still on your path.""", "Open Water & Rest")
             unsafe_allow_html=True
         )
 
-        # Button appears underneath
+        # Button
         if st.button(btn_label, key=btn_label):
             try:
                 result = content_func()
@@ -291,9 +251,10 @@ You’re still on your path.""", "Open Water & Rest")
             except FileNotFoundError:
                 st.warning("Sophie hasn't added letters yet!")
 
+    # Close container
     st.markdown('</div>', unsafe_allow_html=True)
 
-    # Trail footer
+    # Footer
     st.markdown(
         """
         <div class="footer">
