@@ -44,7 +44,7 @@ def set_background(image_url):
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 6rem;  /* Spread markers more */
+            gap: 10rem;  /* Spread markers more */
             margin-top: 2rem;
             margin-bottom: 3rem;
         }}
@@ -193,6 +193,13 @@ if not st.session_state.entered:
 else:
     set_background(TRAIL_BG)
 
+    # Trail Title
+    st.markdown(
+        '<div class="trail-title">🗺️ Choose a Trail Marker — I’m With You Every Step</div>',
+        unsafe_allow_html=True
+    )
+
+    # Instructions
     st.markdown(
         """
         <div class="trail-instructions">
@@ -202,15 +209,7 @@ else:
         unsafe_allow_html=True
     )
 
-    st.markdown(
-        """
-        <div class="footer">
-            🌲 Tap a marker to view its message — then explore the whole trail!
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
+    # Define trail markers
     markers = [
         ("Boost Me", get_random_affirmation, "Open Boost Me"),
         ("Emergency Shelter", get_emergency_message, "Open Emergency Shelter"),
@@ -226,38 +225,43 @@ Take your water, breathe deep, and rest.
 You’re still on your path.""", "Open Water & Rest")
     ]
 
+    # Start the vertical trail grid
     st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
-    cols = st.columns(len(markers))  # Create columns for the markers
+
     for idx, (label, content_func, btn_label) in enumerate(markers):
-        with cols[idx]:
-            st.markdown("<br>" * idx, unsafe_allow_html=True)
+        # Add vertical spacing for staggered diagonal look
+        st.markdown(f"<div style='margin-top: {idx * 2.2}rem'></div>", unsafe_allow_html=True)
 
-            # Updated marker block
-            st.markdown(
-                f"""
-                <div class="marker">
-                    <img src="{WOOD_POST}" class="marker-icon" />
-                    <div class="trail-label">{label}</div>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
+        # Marker post and label
+        st.markdown(
+            f"""
+            <div class="marker">
+                <img src="{WOOD_POST}" class="marker-icon" />
+                <div class="trail-label">{label}</div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
-            # Button appears below the marker
-            if st.button(btn_label, key=btn_label):
-                try:
-                    result = content_func()
-                    if isinstance(result, str):
-                        st.success(result)
-                    else:
-                        st.write(result)
-                except FileNotFoundError:
-                    st.warning("Sophie hasn't added letters yet!")
+        # Button appears underneath
+        if st.button(btn_label, key=btn_label):
+            try:
+                result = content_func()
+                if isinstance(result, str):
+                    st.success(result)
+                else:
+                    st.write(result)
+            except FileNotFoundError:
+                st.warning("Sophie hasn't added letters yet!")
 
     st.markdown('</div>', unsafe_allow_html=True)
 
+    # Trail footer
     st.markdown(
-        '<div class="footer">🌲 Tap a marker to view its message — then explore the whole trail!</div>',
+        """
+        <div class="footer">
+            🌲 Tap a marker to view its message — then explore the whole trail!
+        </div>
+        """,
         unsafe_allow_html=True
     )
-
