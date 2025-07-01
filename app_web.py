@@ -12,11 +12,12 @@ st.set_page_config(page_title="Nolan’s Safe Space", page_icon="🌲", layout="
 WELCOME_BG = "https://raw.githubusercontent.com/swolmer/nolan-s-app/main/assets/welcome_bg.png"
 TRAIL_BG = "https://raw.githubusercontent.com/swolmer/nolan-s-app/main/assets/grand_teton_map.png"
 WOOD_POST = "https://raw.githubusercontent.com/swolmer/nolan-s-app/main/assets/wood_post.png"
+
 def set_background(image_url):
     st.markdown(
         f"""
         <style>
-        @import url('https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&family=Inter:wght@400;600&display=swap');
 
         body {{
             background: #e6ecf0 !important;
@@ -64,13 +65,10 @@ def set_background(image_url):
             border-radius: 12px;
             padding: 0.6rem 0.6rem;
             width: 130px;
-            cursor: pointer;
             text-align: center;
             user-select: none;
             box-shadow: 0 2px 12px rgba(0,0,0,0.08);
             position: relative;
-            font-size: 0.85rem;
-            line-height: 1.3rem;
             backdrop-filter: blur(10px);
             z-index: 1;
             opacity: 0;
@@ -80,10 +78,6 @@ def set_background(image_url):
         .marker:hover {{
             transform: scale(1.05);
         }}
-        .marker img {{
-            width: 36px !important;
-            margin-bottom: 0.25rem;
-        }}
         .marker:nth-child(odd) {{
             transform: translateX(-120px);
         }}
@@ -91,12 +85,27 @@ def set_background(image_url):
             transform: translateX(120px);
         }}
 
+        /* Bigger PNG marker icon */
+        .marker-icon {{
+            width: 60px !important;
+            margin-bottom: 0.25rem;
+        }}
+
+        /* Smaller label under icon */
+        .trail-label {{
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #4B321D;
+            margin-top: 0.3rem;
+        }}
+
         /* 🔥 Button font fix: Streamlit buttons + nested spans */
         .marker button,
         .marker button span,
         .stButton>button,
         .stButton>button span {{
-            font-size: 0.6rem !important;
+            font-family: 'Inter', sans-serif !important;
+            font-size: 0.8125rem !important;  /* ≈13px */
             line-height: 1.1rem !important;
             padding: 0.3rem 0.6rem !important;
             background-color: #8B5C2A !important;
@@ -143,6 +152,7 @@ def set_background(image_url):
         """,
         unsafe_allow_html=True,
     )
+
 
 # Session state to track if the user has "entered" the space
 if "entered" not in st.session_state:
@@ -201,14 +211,19 @@ You’re still on your path.""", "Open Water & Rest")
     for idx, (label, content_func, btn_label) in enumerate(markers):
         with cols[idx]:
             st.markdown("<br>" * idx, unsafe_allow_html=True)
+
+            # Updated marker block
             st.markdown(
                 f"""
                 <div class="marker">
-                    <img src="{WOOD_POST}" width="60" />
-                    <h3 style="margin-top:0.2rem;">{label}</h3>
+                    <img src="{WOOD_POST}" class="marker-icon" />
+                    <div class="trail-label">{label}</div>
+                </div>
                 """,
                 unsafe_allow_html=True
             )
+
+            # Button appears below the marker
             if st.button(btn_label, key=btn_label):
                 try:
                     result = content_func()
@@ -218,10 +233,11 @@ You’re still on your path.""", "Open Water & Rest")
                         st.write(result)
                 except FileNotFoundError:
                     st.warning("Sophie hasn't added letters yet!")
-            st.markdown("</div>", unsafe_allow_html=True)
+
     st.markdown('</div>', unsafe_allow_html=True)
 
     st.markdown(
         '<div class="footer">🌲 Tap a marker to view its message — then explore the whole trail!</div>',
         unsafe_allow_html=True
     )
+
