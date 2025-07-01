@@ -42,7 +42,7 @@ def set_background(image_url):
             position: relative;
             width: 100%;
             height: 700px;
-            margin-top: 2rem;
+            margin-top: 0rem;
         }}
         .marker-wrapper {{
             position: absolute;
@@ -222,13 +222,13 @@ You’re still on your path.""", "Open Water & Rester & Rest")
     # Start vertical trail container
     st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
 
-    # Diagonal step size (closer together)
-    step_x = 80  # px right
-    step_y = 60  # px up
+    # Adjusted spacing
+    step_x = 80
+    step_y = 130
 
     for idx, (label, content_func, btn_label) in enumerate(markers):
-        left = 120 + idx * 80
-        top = idx * 140
+        left = 120 + idx * step_x
+        top = idx * step_y
 
         st.markdown(
             f"""
@@ -236,22 +236,21 @@ You’re still on your path.""", "Open Water & Rester & Rest")
                 <div class="marker">
                     <img src="{WOOD_POST}" class="marker-icon" />
                     <div class="trail-label">{label}</div>
+                    <form action="" method="post">
+                        <button type="submit" name="{btn_label}">{btn_label}</button>
+                    </form>
                 </div>
             </div>
             """,
             unsafe_allow_html=True
         )
 
-        if st.button(btn_label, key=f"button-{idx}"):
+        if st.button(btn_label, key=f"btn-{idx}"):
             try:
                 result = content_func()
-                if isinstance(result, str):
-                    st.success(result)
-                else:
-                    st.write(result)
+                st.success(result if isinstance(result, str) else str(result))
             except FileNotFoundError:
                 st.warning("Sophie hasn't added letters yet!")
-
 
     # Close container
     st.markdown('</div>', unsafe_allow_html=True)
