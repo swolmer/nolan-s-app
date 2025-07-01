@@ -12,7 +12,6 @@ st.set_page_config(page_title="Nolan’s Safe Space", page_icon="🌲", layout="
 WELCOME_BG = "https://raw.githubusercontent.com/swolmer/nolan-s-app/main/assets/welcome_bg.png"
 TRAIL_BG = "https://raw.githubusercontent.com/swolmer/nolan-s-app/main/assets/grand_teton_map.png"
 WOOD_POST = "https://raw.githubusercontent.com/swolmer/nolan-s-app/main/assets/wood_post.png"
-
 def set_background(image_url):
     st.markdown(
         f"""
@@ -91,8 +90,9 @@ def set_background(image_url):
         .marker:nth-child(even) {{
             transform: translateX(120px);
         }}
-        .marker button {{
+        .marker button, .marker button span {{
             font-size: 0.65rem !important;
+            line-height: 1.1rem !important;
             padding: 0.3rem 0.6rem !important;
             background-color: #8B5C2A !important;
             color: white !important;
@@ -134,6 +134,7 @@ def set_background(image_url):
         """,
         unsafe_allow_html=True,
     )
+
 
 # Session state to track if the user has "entered" the space
 if "entered" not in st.session_state:
