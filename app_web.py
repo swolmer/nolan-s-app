@@ -237,57 +237,56 @@ Take your water, breathe deep, and rest.
 You’re still on your path.""", "Open Water & Rester & Rest")
     ]
 
-    # Title Title
+    # Title
     st.markdown(
-        '<div class="trail-title">🗺️ Choose a Trail Marker — I’m With You Every Step</div>',        '<div class="trail-title">🗺️ Choose a Trail Marker — I’m With You Every Step</div>',
-        unsafe_allow_html=TrueTrue
+        '<div class="trail-title">🗺️ Choose a Trail Marker — I’m With You Every Step</div>',
+        unsafe_allow_html=True
     )
 
     # Instructions
     st.markdown(
         """
         <div class="trail-instructions">
-            Follow the path. Each stop is here to guide you. guide you.
+            Follow the path. Each stop is here to guide you.
         </div>
         """,
         unsafe_allow_html=True
     )
 
     # Start vertical trail container
-    st.markdown('<div class="trail-grid">', unsafe_allow_html=True)t.markdown('<div class="trail-grid">', unsafe_allow_html=True)
+    st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
 
-    for idx, (label, content_func, btn_label) in enumerate(markers):, (label, content_func, btn_label) in enumerate(markers):
-        st.markdown(own(
+    for idx, (label, content_func, btn_label) in enumerate(markers):
+        st.markdown(
             f"""
-            <div class="marker-wrapper">-wrapper">
-                <div class="marker">           <div class="marker">
-                    <img src="{WOOD_POST}" class="marker-icon" />                    <img src="{WOOD_POST}" class="marker-icon" />
-                    <div class="trail-label">{label}</div>  <div class="trail-label">{label}</div>
-                </div></div>
-            </div> </div>
+            <div class="marker-wrapper">
+                <div class="marker">
+                    <img src="{WOOD_POST}" class="marker-icon" />
+                    <div class="trail-label">{label}</div>
+                </div>
+            </div>
             """,
             unsafe_allow_html=True
         )
 
-        if st.button(btn_label, key=btn_label):, key=btn_label):
-            try:       try:
-                result = content_func()                result = content_func()
-                if isinstance(result, str):, str):
+        if st.button(btn_label, key=btn_label):
+            try:
+                result = content_func()
+                if isinstance(result, str):
                     st.success(result)
-                else:                else:
+                else:
                     st.write(result)
-            except FileNotFoundError:ileNotFoundError:
-                st.warning("Sophie hasn't added letters yet!")st.warning("Sophie hasn't added letters yet!")
+            except FileNotFoundError:
+                st.warning("Sophie hasn't added letters yet!")
 
-
-        # Close container
+    # Close container
     st.markdown('</div>', unsafe_allow_html=True)
 
     # Footer
     st.markdown(
         """
-        <div class="footer">div class="footer">
-            🌲 Tap a marker to view its message — then explore the whole trail!            🌲 Tap a marker to view its message — then explore the whole trail!
+        <div class="footer">
+            🌲 Tap a marker to view its message — then explore the whole trail!
         </div>
         """,
         unsafe_allow_html=True
