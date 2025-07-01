@@ -259,23 +259,23 @@ for idx, (label, content_func, btn_label) in enumerate(markers):
         st.markdown(
             f"""
             <div class="marker-wrapper {add_line}" style="left:{left}px; top:{top}px;">
-                <div class="marker">
-                    <img src="{WOOD_POST}" class="marker-icon" />
-                    <div class="trail-label">{label}</div>
-                    <form action="" method="post">
-                        <button type="submit" name="{button_name}" style="
-                            margin-top: 0.5rem;
-                            font-size: 0.8125rem;
-                            padding: 0.3rem 0.6rem;
-                            background-color: #8B5C2A;
-                            color: white;
-                            border: 2px solid #5A3E1B;
-                            border-radius: 6px;
-                            font-weight: 600;
-                            cursor: pointer;
-                        ">{btn_label}</button>
-                    </form>
-                </div>
+            <div class="marker">
+                <img src="{WOOD_POST}" class="marker-icon" alt="Wooden trail marker post with a warm, welcoming appearance, set against a softly blurred forest trail background. The marker represents a stop along a comforting and supportive journey. The environment feels peaceful and safe, evoking a sense of encouragement and care." />
+                <div class="trail-label">{label}</div>
+                <form action="" method="post">
+                <button type="submit" name="{button_name}" style="
+                    margin-top: 0.5rem;
+                    font-size: 0.8125rem;
+                    padding: 0.3rem 0.6rem;
+                    background-color: #8B5C2A;
+                    color: white;
+                    border: 2px solid #5A3E1B;
+                    border-radius: 6px;
+                    font-weight: 600;
+                    cursor: pointer;
+                ">{btn_label}</button>
+                </form>
+            </div>
             </div>
             """,
             unsafe_allow_html=True
