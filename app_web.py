@@ -227,8 +227,8 @@ You’re still on your path.""", "Open Water & Rester & Rest")
     step_y = 60  # px up
 
     for idx, (label, content_func, btn_label) in enumerate(markers):
-        left = 120 + idx * 80   # Adjust horizontal spread
-        top = idx * 140         # Adjust vertical spacing
+        left = 120 + idx * 80
+        top = idx * 140
 
         st.markdown(
             f"""
@@ -236,18 +236,13 @@ You’re still on your path.""", "Open Water & Rester & Rest")
                 <div class="marker">
                     <img src="{WOOD_POST}" class="marker-icon" />
                     <div class="trail-label">{label}</div>
-                    <form action="" method="post">
-                        <button type="submit" name="{btn_label}" style="margin-top: 0.6rem;">
-                            {btn_label}
-                        </button>
-                    </form>
                 </div>
             </div>
             """,
             unsafe_allow_html=True
         )
 
-        if st.session_state.get(btn_label) or st.form_submit_button(btn_label):
+        if st.button(btn_label, key=f"button-{idx}"):
             try:
                 result = content_func()
                 if isinstance(result, str):
@@ -255,7 +250,8 @@ You’re still on your path.""", "Open Water & Rester & Rest")
                 else:
                     st.write(result)
             except FileNotFoundError:
-                st.warning("Sophie hasn't added letters yet!")
+                st.warning("Sophie hasn't added letters yet!")`
+
 
     # Close container
     st.markdown('</div>', unsafe_allow_html=True)
