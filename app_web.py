@@ -90,8 +90,13 @@ def set_background(image_url):
         .marker:nth-child(even) {{
             transform: translateX(120px);
         }}
-        .marker button, .marker button span {{
-            font-size: 0.65rem !important;
+
+        /* 🔥 Button font fix: Streamlit buttons + nested spans */
+        .marker button,
+        .marker button span,
+        .stButton>button,
+        .stButton>button span {{
+            font-size: 0.6rem !important;
             line-height: 1.1rem !important;
             padding: 0.3rem 0.6rem !important;
             background-color: #8B5C2A !important;
@@ -101,12 +106,16 @@ def set_background(image_url):
             font-weight: 600 !important;
             margin-top: 0.3rem !important;
             box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+            text-transform: none !important;
         }}
-        .marker button:hover {{
+
+        .marker button:hover,
+        .stButton>button:hover {{
             background-color: #A06A36 !important;
             border-color: #6A4724 !important;
             transform: scale(0.97);
         }}
+
         @keyframes fadeIn {{
             from {{ opacity: 0; transform: translateY(20px); }}
             to {{ opacity: 1; transform: translateY(0); }}
@@ -134,7 +143,6 @@ def set_background(image_url):
         """,
         unsafe_allow_html=True,
     )
-
 
 # Session state to track if the user has "entered" the space
 if "entered" not in st.session_state:
