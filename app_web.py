@@ -244,24 +244,24 @@ You’re still on your path.""", "Open Water & Rester & Rest")
         left = 40 + idx * step_x
         top = 10 + idx * step_y
 
-        with st.container():
-            st.markdown(
-                f"""
-                <div class="marker-wrapper" style="left:{left}px; top:{top}px;">
-                    <div class="marker">
-                        <img src="{WOOD_POST}" class="marker-icon" />
-                        <div class="trail-label">{label}</div>
-                """,
-                unsafe_allow_html=True
-            )
-            # Button inside the marker card
-            if st.button(btn_label, key=f"btn-{idx}", help=f"Click to open: {label}"):
-                try:
-                    result = content_func()
-                    st.success(result if isinstance(result, str) else str(result))
-                except FileNotFoundError:
-                    st.warning("Sophie hasn't added letters yet!")
-            st.markdown("</div></div>", unsafe_allow_html=True)
+        # Render the marker card as one unit: icon, label, and button together
+        st.markdown(
+            f"""
+            <div class="marker-wrapper" style="left:{left}px; top:{top}px;">
+                <div class="marker">
+                    <img src="{WOOD_POST}" class="marker-icon" />
+                    <div class="trail-label">{label}</div>
+            """,
+            unsafe_allow_html=True
+        )
+        # Button INSIDE the marker card
+        if st.button(btn_label, key=f"btn-{idx}", help=f"Click to open: {label}"):
+            try:
+                result = content_func()
+                st.success(result if isinstance(result, str) else str(result))
+            except FileNotFoundError:
+                st.warning("Sophie hasn't added letters yet!")
+        st.markdown("</div></div>", unsafe_allow_html=True)
 
     # Close container
     st.markdown('</div>', unsafe_allow_html=True)
