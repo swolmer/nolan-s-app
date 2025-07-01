@@ -237,7 +237,7 @@ You’re still on your path.""", "Open Water & Rester & Rest")
     # Start vertical trail container
     st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
     # Adjusted spacing
-    step_x = 160
+    step_x = 145
     step_y = 80
 
     for idx, (label, content_func, btn_label) in enumerate(markers):
