@@ -39,12 +39,11 @@ def set_background(image_url):
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
             backdrop-filter: blur(16px);
         }}
-        .trail-grid {
+        .trail-grid {{
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 0;  /* handled manually with offset */
-        }
             margin-top: 2rem;
             margin-bottom: 3rem;
         }}
