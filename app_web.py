@@ -154,6 +154,7 @@ You’re still on your path.""", "Open Water & Rest")
     ]
 
     st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
+    cols = st.columns(len(markers))  # <-- Add this line
     for idx, (label, content_func, btn_label) in enumerate(markers):
         with cols[idx]:
             # Add vertical space for diagonal effect
