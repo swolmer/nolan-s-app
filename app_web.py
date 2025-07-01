@@ -239,57 +239,45 @@ You’re still on your path.""", "Open Water & Rester & Rest")
     # Adjusted spacing
     step_x = 120
     step_y = 80
-# Start vertical trail container
-st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
 
-# Adjusted spacing for diagonal layout
-step_x = 120
-step_y = 80
+    # Start vertical trail container
+    st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
 
-for idx, (label, content_func, btn_label) in enumerate(markers):
-    left = 120 + idx * step_x
-    top = idx * step_y
+    # Adjusted spacing
+    step_x = 120
+    step_y = 80
 
-    add_line = "show-line" if idx < len(markers) - 1 else ""
+    for idx, (label, content_func, btn_label) in enumerate(markers):
+        left = 120 + idx * step_x
+        top = idx * step_y
+        add_line = "show-line" if idx < len(markers) - 1 else ""
 
-    # Unique HTML button name for form handling
-    button_name = f"btn-{idx}"
-
-        # Marker with HTML-styled button
         st.markdown(
             f"""
             <div class="marker-wrapper {add_line}" style="left:{left}px; top:{top}px;">
-            <div class="marker">
-                <img src="{WOOD_POST}" class="marker-icon" alt="Wooden trail marker post with a warm, welcoming appearance, set against a softly blurred forest trail background. The marker represents a stop along a comforting and supportive journey. The environment feels peaceful and safe, evoking a sense of encouragement and care." />
-                <div class="trail-label">{label}</div>
-                <form action="" method="post">
-                <button type="submit" name="{button_name}" style="
-                    margin-top: 0.5rem;
-                    font-size: 0.8125rem;
-                    padding: 0.3rem 0.6rem;
-                    background-color: #8B5C2A;
-                    color: white;
-                    border: 2px solid #5A3E1B;
-                    border-radius: 6px;
-                    font-weight: 600;
-                    cursor: pointer;
-                ">{btn_label}</button>
-                </form>
-            </div>
+                <div class="marker">
+                    <img src="{WOOD_POST}" class="marker-icon" />
+                    <div class="trail-label">{label}</div>
+                    <div style="margin-top: 0.5rem;">
+                        <button onclick="document.getElementById('btn-{idx}').click()" style="font-size: 0.8125rem; padding: 0.3rem 0.6rem; background-color: #8B5C2A; color: white; border: 2px solid #5A3E1B; border-radius: 6px; font-weight: 600; cursor: pointer;">{btn_label}</button>
+                    </div>
+                </div>
             </div>
             """,
             unsafe_allow_html=True
         )
 
-        # Check if the corresponding button was pressed
-        if st.session_state.get(button_name) or st.button(btn_label, key=button_name):
+        if st.button(btn_label, key=f"btn-{idx}", help=f"Click to open: {label}"):
             try:
                 result = content_func()
-                st.success(result if isinstance(result, str) else str(result))
+                if isinstance(result, str):
+                    st.success(result)
+                else:
+                    st.write(result)
             except FileNotFoundError:
                 st.warning("Sophie hasn't added letters yet!")
 
-    # Close trail container
+    # Close container
     st.markdown('</div>', unsafe_allow_html=True)
 
     # Footer
