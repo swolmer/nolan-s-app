@@ -49,12 +49,35 @@ def set_background(image_url):
             margin-top: 0;
             margin-bottom: 2rem;
             width: 100%;
+            position: relative;
+        }}
+
+        .trail-line {{
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: repeating-linear-gradient(
+                to bottom,
+                #8B5C2A,
+                #8B5C2A 16px,
+                transparent 16px,
+                transparent 32px
+            );
+            transform: translateX(-50%);
+            z-index: 0;
         }}
 
         .marker-wrapper {{
-            position: static;
+            position: relative;
             margin: 0;
             width: auto;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: none;
         }}
 
         .marker {{
@@ -149,7 +172,10 @@ if not st.session_state.entered:
     )
 else:
     set_background(TRAIL_BG)
-    st.markdown('<div class="trail-title">🗺️ Choose a Trail Marker — I’m With You Every Step</div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="trail-title" style="text-align:center; font-size:1.3rem; font-weight:700; margin-bottom:0.5rem;">🗺️ Choose a Trail Marker — I’m With You Every Step</div>',
+        unsafe_allow_html=True
+    )
 
     markers = [
         ("Boost Me", get_random_affirmation, "Open Boost Me"),
@@ -164,7 +190,30 @@ else:
         ("Water & Rest", lambda: """You don’t have to summit today, Nolan.  
 Take your water, breathe deep, and rest.  
 You’re still on your path.""", "Open Water & Rester & Rest")
-    ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    st.markdown('</div>', unsafe_allow_html=True)        st.markdown("</div></div>", unsafe_allow_html=True)                st.warning("Sophie hasn't added letters yet!")            except FileNotFoundError:                st.success(result if isinstance(result, str) else str(result))                result = content_func()            try:        if st.button(btn_label, key=f"btn-{idx}"):        )            unsafe_allow_html=True            """,                    <div class="trail-label">{label}</div>                    <img src="{WOOD_POST}" class="marker-icon" />                <div class="marker">            <div class="marker-wrapper">            f"""        st.markdown(    for idx, (label, content_func, btn_label) in enumerate(markers):    st.markdown('<div class="trail-line"></div>', unsafe_allow_html=True)    # Add the vertical trail line (behind the markers)    st.markdown('<div class="trail-grid">', unsafe_allow_html=True)    ]    ]
 
     st.markdown('<div class="trail-grid">', unsafe_allow_html=True)
     for idx, (label, content_func, btn_label) in enumerate(markers):
