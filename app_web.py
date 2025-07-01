@@ -219,20 +219,22 @@ You’re still on your path.""", "Open Water & Rester & Rest")
     st.markdown('<div class="trail-line"></div>', unsafe_allow_html=True)
 
     for idx, (label, content_func, btn_label) in enumerate(markers):
-        st.markdown(
-            f"""
-            <div class="marker-wrapper">
-                <div class="marker">
-                    <img src="{WOOD_POST}" class="marker-icon" />
-                    <div class="trail-label">{label}</div>
-            """,
-            unsafe_allow_html=True
-        )
-        if st.button(btn_label, key=f"btn-{idx}"):
-            try:
-                result = content_func()
-                st.success(result if isinstance(result, str) else str(result))
-            except FileNotFoundError:
-                st.warning("Sophie hasn't added letters yet!")
-        st.markdown("</div></div>", unsafe_allow_html=True)
+        with st.container():
+            st.markdown(
+                f"""
+                <div class="marker-wrapper">
+                    <div class="marker">
+                        <img src="{WOOD_POST}" class="marker-icon" />
+                        <div class="trail-label">{label}</div>
+                """,
+                unsafe_allow_html=True
+            )
+            # Button is rendered here, inside the marker card
+            if st.button(btn_label, key=f"btn-{idx}"):
+                try:
+                    result = content_func()
+                    st.success(result if isinstance(result, str) else str(result))
+                except FileNotFoundError:
+                    st.warning("Sophie hasn't added letters yet!")
+            st.markdown("</div></div>", unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
